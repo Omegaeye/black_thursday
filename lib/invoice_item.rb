@@ -4,12 +4,12 @@ require 'bigdecimal'
 class InvoiceItem
 
   attr_accessor :unit_price
-  attr_reader :id,
-              :item_id,
-              :invoice_id,
-              :quantity,
-              :created_at,
-              :updated_at
+  attr_reader   :id,
+                :item_id,
+                :invoice_id,
+                :quantity,
+                :created_at,
+                :updated_at
 
   def initialize (data, repository)
     @id          = data[:id]
@@ -27,7 +27,7 @@ class InvoiceItem
   end
 
   def update_attributes (new_attributes)
-    @quantity = new_attributes[:quantity]
+    @quantity   = new_attributes[:quantity]
     @unit_price = new_attributes[:unit_price]
   end
 end

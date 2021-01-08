@@ -17,7 +17,8 @@ class MerchantRepository
 
   def create(attributes)
       @collections[new_id.to_s] =
-      Merchant.new({:id => new_id.to_s,
+      Merchant.new({
+                :id => new_id.to_s,
               :name => attributes[:name].downcase,
         :created_at => attributes[:created_at],
         :updated_at => attributes[:updated_at]}, self)

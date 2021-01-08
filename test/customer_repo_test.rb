@@ -48,9 +48,10 @@ class CustomerRepoTest < Minitest::Test
     actual = @dummy_repo.find_by_id(9)
     assert_equal "Dejon", actual.first_name
 
-    @dummy_repo.update({id: 9,
-                      first_name: "Khoa",
-                      last_name: "Nguyen",
+    @dummy_repo.update({
+      id:         9,
+      first_name: "Khoa",
+      last_name:  "Nguyen",
                       })
 
     actual = @dummy_repo.find_by_id(9)
@@ -59,9 +60,9 @@ class CustomerRepoTest < Minitest::Test
 
   def test_delete
     data = {
-      :id => 13,
+      :id         => 13,
       :first_name => "Joan",
-      :last_name => "Clarke",
+      :last_name  => "Clarke",
       :created_at => Time.now,
       :updated_at => Time.now
         }

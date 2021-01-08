@@ -16,11 +16,11 @@ class Invoice
     @status      = data[:status]
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)
-    @repository = repository
+    @repository  = repository
   end
 
   def update_attributes (new_attributes)
-    @status = new_attributes[:status]
+    @status     = new_attributes[:status]
     @updated_at = new_attributes[:updated_at] = Time.now
   end
 end
