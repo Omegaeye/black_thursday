@@ -41,9 +41,8 @@ class ItemsRepo
   end
 
   def create(attributes)
-    max_id = (all.values.max_by{|item| item.id}).id.to_i
-    next_id = max_id + 1
-    @collections[attributes[:id]] = Item.new({:id => next_id.to_s,
+    @collections[attributes[:id]] = Item.new({
+            :id => new_id,
           :name => attributes[:name].downcase,
    :description => attributes[:description].downcase,
     :unit_price => attributes[:unit_price],
