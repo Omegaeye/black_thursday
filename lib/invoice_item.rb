@@ -12,10 +12,10 @@ class InvoiceItem
               :updated_at
 
   def initialize (data, repository)
-    @id          = data[:id]
-    @item_id     = data[:item_id]
-    @invoice_id  = data[:invoice_id]
-    @quantity    = data[:quantity]
+    @id          = data[:id].to_i
+    @item_id     = data[:item_id].to_i
+    @invoice_id  = data[:invoice_id].to_i
+    @quantity    = data[:quantity].to_i
     @unit_price  = data[:unit_price].to_d
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)
