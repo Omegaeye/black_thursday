@@ -17,18 +17,18 @@ class TransactionRepoTest < Minitest::Test
   end
 
   def test_find_by_id
-    actual = @dummy_repo.find_by_id("1")
-    assert_equal "2179", actual.invoice_id
+    actual = @dummy_repo.find_by_id(1)
+    assert_equal 2179, actual.invoice_id
   end
 
   def test_find_all_by_invoice_id
-    actual = @dummy_repo.find_all_by_invoice_id("2179")
+    actual = @dummy_repo.find_all_by_invoice_id(2179)
     assert_equal "4068631943231473", actual[0].credit_card_number
   end
 
   def test_find_all_by_credit_card_number
     actual = @dummy_repo.test_find_all_by_credit_card_number("4558368405929183")
-    assert_equal "4966", actual[0].invoice_id
+    assert_equal 4966, actual[0].invoice_id
   end
 
   def test_find_all_by_result
@@ -38,7 +38,7 @@ class TransactionRepoTest < Minitest::Test
 
   def test_it_can_create_new_item
     data = {
-      :id => "20",
+      :id => 20,
       :invoice_id => 8,
       :credit_card_number => "4242424242424242",
       :credit_card_expiration_date => "0220",
@@ -46,38 +46,39 @@ class TransactionRepoTest < Minitest::Test
       :created_at => Time.now,
       :updated_at => Time.now  }
     @dummy_repo.create(data)
-    actual = @dummy_repo.find_by_id("10")
+    actual = @dummy_repo.find_by_id(10)
     assert_equal "success", actual.result
   end
 
   def test_update
-    actual = @dummy_repo.find_by_id("9")
+    actual = @dummy_repo.find_by_id(9)
     assert_equal "failed", actual.result
-    actual = @dummy_repo.find_all_by_invoice_id("1752")
+    actual = @dummy_repo.find_all_by_invoice_id(1752)
     assert_equal "4463525332822998", actual[0].credit_card_number
 
-    @dummy_repo.update({id: "9",
-                        credit_card_number: "1234567891011", credit_card_expiration_date: "0221", status: "success"})
+    @dummy_repo.update({id: 9,
+                        credit_card_number: "1234567891011", credit_card_expiration_date: "0221",
+                        status: "success"})
 
-    actual = @dummy_repo.find_by_id("9")
+    actual = @dummy_repo.find_by_id(9)
     assert_equal "0221", actual.credit_card_expiration_date
   end
 
   def test_delete
     data = {
-      :id => "20",
-      :invoice_id => "8",
+      :id => 20,
+      :invoice_id => 8,
       :credit_card_number => "4242424242424242",
       :credit_card_expiration_date => "0220",
       :result => "success",
       :created_at => Time.now,
       :updated_at => Time.now  }
     @dummy_repo.create(data)
-    actual = @dummy_repo.find_all_by_invoice_id("8")
-    assert_equal "10", actual[0].id
-    @dummy_repo.delete("10")
+    actual = @dummy_repo.find_all_by_invoice_id(8)
+    assert_equal 11, actual[0].id
+    @dummy_repo.delete(11)
 
-    assert_nil nil, @dummy_repo.find_by_id("10")
+    assert_nil nil, @dummy_repo.find_by_id(11)
   end
 
 end

@@ -7,7 +7,6 @@ class Merchant
   attr_reader   :id,
                 :created_at
 
-
   def initialize(data, repository)
     @repository  = repository
     @id          = data[:id]
@@ -20,5 +19,4 @@ class Merchant
     @name       = new_attributes[:name]
     @updated_at = new_attributes[:updated_at] = Time.now
   end
-
 end
