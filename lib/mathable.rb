@@ -16,12 +16,15 @@ module Mathable
 
   def squares_of_differences(num)
     num.map do |difference|
-      difference ** 2
+      (difference ** 2).round(4)
     end
   end
 
-  def sum_of_square_differences(squares_of_differences)
-    squares_of_differences.sum
+  def sum_of_square_differences(num)
+    sum_of_squares = num.map do |difference|
+      difference ** 2
+    end
+    sum_of_squares.sum
   end
 
   def std_dev_variance(num)
@@ -35,4 +38,14 @@ module Mathable
   def standard_deviation(sum_and_variance_quotient)
     (sum_and_variance_quotient ** 0.5).round(2)
   end
+
+  def final_std_dev(num1, num2)
+    a = (difference_of_each_x_and_y(num1, num2))
+    b = (squares_of_differences(a))
+    c = (b.sum)
+    d = (std_dev_variance(num1))
+    e = (sum_and_variance_quotient(c, d))
+    (standard_deviation(e))
+  end
+
 end

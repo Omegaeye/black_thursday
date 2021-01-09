@@ -23,7 +23,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal [1, 2, 3, 4], @sales_engine_1.items_per_merchant.keys
     assert_equal 1.25, @sales_analyst.average_items_per_merchant
   end
-  #
+
   def test_it_can_calculate_standard_deviation
     assert_equal [1, 2, 1, 1], @sales_analyst.all_items_by_merchant
     assert_equal [-0.25, 0.75, -0.25, -0.25], @sales_analyst.difference_of_item_and_average_items
@@ -31,7 +31,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.75, @sales_analyst.sum_of_item_square_differences
     assert_equal 3, @sales_analyst.item_std_dev_variance
     assert_equal 0.25, @sales_analyst.item_sum_and_variance_quotient
-    assert_equal 0.50, @sales_analyst.standard_deviation
+    assert_equal 0.50, @sales_analyst.item_standard_deviation
+    assert_equal 0.50, @sales_analyst.item_std_dev
   end
   #
   # def test_merchants_with_high_item_count

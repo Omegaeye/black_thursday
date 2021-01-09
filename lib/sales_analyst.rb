@@ -27,6 +27,10 @@ class SalesAnalyst
     end
   end
 
+  def item_std_dev
+    final_std_dev(all_items_by_merchant, average_items_per_merchant)
+  end
+
   def difference_of_item_and_average_items
     difference_of_each_x_and_y(all_items_by_merchant, average_items_per_merchant)
   end
@@ -47,8 +51,8 @@ class SalesAnalyst
     sum_and_variance_quotient(sum_of_item_square_differences, item_std_dev_variance)
   end
 
-  def standard_deviation
-    (sum_and_variance_quotient ** 0.5).round(2)
+  def item_standard_deviation
+    standard_deviation(item_sum_and_variance_quotient)
   end
 
   def merchants_with_high_item_count
