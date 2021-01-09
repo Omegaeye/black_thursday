@@ -8,23 +8,28 @@ class MerchantRepository
   attr_reader :collections
 
   def populate_collection
-    items = Hash.new{|h, k| h[k] = [] }
+    merchants = Hash.new{|h, k| h[k] = [] }
     CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
-      items[data[:id]] = Merchant.new(data, self)
+      merchants[data[:id]] = Merchant.new(data, self)
     end
-    items
+      merchants
   end
 
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
 
+  def find_all_by_name(search_string)
+    all.find_all do |value|
+      value.name.downcase.include?(search_string.downcase)
+    end
+  end
+
   def create(attributes)
-      @collections[attributes[:id]] =
-      Merchant.new({
-                :id => new_id,
-              :name => attributes[:name],
-        :created_at => Time.now,
-        :updated_at => Time.now}, self)
+    @collections[attributes[:id]] = Merchant.new({
+      :id         => new_id,
+      :name       => attributes[:name],
+      :created_at => Time.now,
+      :updated_at => Time.now}, self)
   end
 end
