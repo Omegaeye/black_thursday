@@ -4,9 +4,9 @@ require 'bigdecimal'
 module Methods
 
   def initialize(data, engine)
-    @data = data
+    @data        = data
     @collections = populate_collection
-    @engine = engine
+    @engine      = engine
   end
 
   def all
@@ -25,21 +25,9 @@ module Methods
   	end
   end
 
-  def find_all_by_name(search_string)
-    all.find_all do |value|
-      value.name.downcase.include?(search_string.downcase)
-    end
-  end
-
   def find_all_by_merchant_id(id)
     all.find_all do |value|
       value.merchant_id == id
-    end
-  end
-
-  def find_all_by_customer_id(id)
-    all.find_all do |value|
-      value.customer_id == id
     end
   end
 
@@ -49,19 +37,19 @@ module Methods
     end
   end
 
-  def find_all_by_status(status)
+  def find_all_by_customer_id(id)
     all.find_all do |value|
-      value.status == status
+      value.customer_id == id
     end
   end
 
   def update (id, update)
-    merchant = find_by_id(id)
-    merchant.update_attributes(update) unless merchant == nil
+    value_need_update = find_by_id(id)
+    value_need_update.update_attributes(update) unless value_need_update == nil
   end
 
   def max_id
-    max_id = (all.max_by{|item| item.id.to_i}).id.to_i
+    max_id = (all.max_by{|value| value.id.to_i}).id.to_i
   end
 
   def new_id
@@ -69,8 +57,8 @@ module Methods
   end
 
   def delete(id)
-    all.delete_if do |element| 
-      element.id == id
+    @collections.delete_if do |key,value|
+      value.id == id
     end
   end
 end

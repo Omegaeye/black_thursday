@@ -1,10 +1,11 @@
 require 'CSV'
-require_relative './items'
 require 'time'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require_relative './sales_engine'
 require_relative './module'
+require_relative './items'
+
 
 class ItemsRepo
   include Methods
@@ -15,7 +16,7 @@ class ItemsRepo
     CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
       items[data[:id]] = Item.new(data, self)
     end
-    items
+      items
   end
 
   def find_all_by_price (price)
@@ -42,13 +43,14 @@ class ItemsRepo
 
   def create(attributes)
     @collections[attributes[:id]] = Item.new({
-            :id => new_id,
-          :name => attributes[:name],
-   :description => attributes[:description],
-    :unit_price => attributes[:unit_price],
-   :merchant_id => attributes[:merchant_id],
-    :created_at => attributes[:created_at],
-    :updated_at => attributes[:updated_at]},self)
+      :id          => new_id,
+      :name        => attributes[:name],
+      :description => attributes[:description],
+      :unit_price  => attributes[:unit_price],
+      :merchant_id => attributes[:merchant_id],
+      :created_at  => attributes[:created_at],
+      :updated_at  => attributes[:updated_at]},
+      self)
   end
 
   def delete(id)
