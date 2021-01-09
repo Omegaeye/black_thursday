@@ -19,6 +19,12 @@ class MerchantRepository
     "#<#{self.class} #{@merchants.size} rows>"
   end
 
+  def find_all_by_name(search_string)
+    all.find_all do |value|
+      value.name.downcase.include?(search_string.downcase)
+    end
+  end
+
   def create(attributes)
     @collections[attributes[:id]] = Merchant.new({
       :id         => new_id,
