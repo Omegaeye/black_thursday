@@ -57,6 +57,8 @@ module Methods
   end
 
   def delete(id)
-    all.delete_if{|value|value.id == id}
+    @collections.delete_if do |key,value|
+      value.id == id
+    end
   end
 end

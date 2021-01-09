@@ -18,13 +18,13 @@ class TransactionRepo
   end
 
   def test_find_all_by_credit_card_number(credit_card_number)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.credit_card_number == credit_card_number
     end
   end
 
   def find_all_by_result (result)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.result == result
     end
   end

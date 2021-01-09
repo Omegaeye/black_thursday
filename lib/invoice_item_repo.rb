@@ -18,13 +18,13 @@ class InvoiceItemRepo
   end
 
   def find_all_by_item_id(id)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.item_id == id
     end
   end
 
   def find_all_by_invoice_id(id)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.invoice_id == id
     end
   end
