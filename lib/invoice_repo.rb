@@ -9,6 +9,12 @@ class InvoiceRepo
   include Methods
   attr_reader :collections
 
+  def initialize(data, engine)
+    @data = data
+    @collections = populate_collection
+    @engine = engine
+  end
+
   def populate_collection
     items = Hash.new{|h, k| h[k] = [] }
       CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|

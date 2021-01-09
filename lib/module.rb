@@ -3,11 +3,6 @@ require 'bigdecimal/util'
 require 'bigdecimal'
 module Methods
 
-  def initialize(data, engine)
-    @data = data
-    @collections = populate_collection
-    @engine = engine
-  end
 
   def all
     @collections

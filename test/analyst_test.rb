@@ -1,10 +1,6 @@
-# require './test/test_helper'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/sales_engine'
-require './lib/analyst'
-require 'CSV'
 
+require 'CSV'
+require './test/test_helper'
 class AnalystTest < Minitest::Test
 
   def setup

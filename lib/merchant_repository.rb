@@ -5,7 +5,17 @@ require_relative './module'
 class MerchantRepository
   include Methods
   attr_reader :data,
-              :collections
+    :collections
+
+  def initialize(data, engine)
+    @data = data
+    @collections = populate_collection
+    @engine = engine
+  end
+
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
 
   def populate_collection
     items = Hash.new{|h, k| h[k] = [] }
@@ -16,12 +26,12 @@ class MerchantRepository
   end
 
   def create(attributes)
-      @collections[new_id.to_s] =
-      Merchant.new({
-                :id => new_id.to_s,
-              :name => attributes[:name].downcase,
-        :created_at => attributes[:created_at],
-        :updated_at => attributes[:updated_at]}, self)
+    @collections[new_id.to_s] =
+    Merchant.new({
+                   :id => new_id.to_s,
+                   :name => attributes[:name].downcase,
+                   :created_at => attributes[:created_at],
+                   :updated_at => attributes[:updated_at]}, self)
   end
 
   def delete(id)

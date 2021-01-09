@@ -1,5 +1,5 @@
 require 'CSV'
-require './test_helper'
+require './test/test_helper'
 
 class SalesEngineTest < Minitest::Test
   def setup

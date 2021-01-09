@@ -1,5 +1,6 @@
 require 'CSV'
-require './lib/sales_engine'
+require_relative './sales_engine'
+
 
 class Analyst
 
@@ -67,14 +68,14 @@ class Analyst
     collector_array = []
     items_per_merchant.each do |item_id, items|
       if items.count.to_f > (standard_deviation + average_items_per_merchant)
-        @engine.merchants.merchant_info.each do |merchant_id, total_merchants|
+        @engine.merchants.collections.each do |merchant_id, total_merchants|
+          binding.pry
           if total_merchants.id == item_id
             collector_array << total_merchants.name
           end
         end
       end
     end
-    collector_array
   end
 
   def items_to_be_averaged(merchant_number)

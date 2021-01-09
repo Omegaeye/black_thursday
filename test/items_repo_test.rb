@@ -1,9 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/sales_engine'
-require './lib/items_repo'
+
 require 'CSV'
-require 'mocha/minitest'
+require './test/test_helper'
 
 class ItemsRepoTest < Minitest::Test
 
@@ -46,10 +43,10 @@ class ItemsRepoTest < Minitest::Test
   end
 
   def test_it_can_find_by_price
-    assert_instance_of Array, @dummy_repo.find_by_price(14900)
-    assert_instance_of Item,  @dummy_repo.find_by_price(200)[0]
-    assert_instance_of BigDecimal, @dummy_repo.find_by_price(200)[0].unit_price
-    assert_instance_of Item,  @dummy_repo.find_by_price(46000)[-1]
+    assert_instance_of Array, @dummy_repo.find_all_by_price(14900)
+    assert_instance_of Item,  @dummy_repo.find_all_by_price(200)[0]
+    assert_instance_of BigDecimal, @dummy_repo.find_all_by_price(200)[0].unit_price
+    assert_instance_of Item,  @dummy_repo.find_all_by_price(46000)[-1]
   end
 
 
@@ -58,8 +55,8 @@ class ItemsRepoTest < Minitest::Test
   end
 
   def test_it_can_find_by_description
-    data_set = @dummy_repo.find_all_with_description("Size 3m")
-
+    data_set = @dummy_repo.find_all_with_description("A large Yeti of sorts, casually devours a cow as the others watch numbly.")
+    
     sub_str = ["Size","3m"]
     data_set.each do |item|
       assert_equal true, item.description.include?("size") || item.description.include?("3m")
@@ -78,7 +75,7 @@ class ItemsRepoTest < Minitest::Test
   def test_update
     @dummy_repo.find_by_name("amazon")
     assert_equal "amazon", @dummy_repo.all.values[2].name
-    @dummy_repo.find_by_price(4500)
+    @dummy_repo.find_all_by_price(4500)
     assert_equal 4500, @dummy_repo.all.values[2].unit_price
     @dummy_repo.find_all_with_description("sell things")
     assert_equal "we sell things", @dummy_repo.all.values[2].description
@@ -87,7 +84,7 @@ class ItemsRepoTest < Minitest::Test
     
     @dummy_repo.find_by_name("ebay")
     assert_equal "ebay", @dummy_repo.all.values[2].name
-    @dummy_repo.find_by_price(6400)
+    @dummy_repo.find_all_by_price(6400)
     assert_equal 6400, @dummy_repo.all.values[2].unit_price
   end
 
