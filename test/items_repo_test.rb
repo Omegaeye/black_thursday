@@ -1,9 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/sales_engine'
-require './lib/items_repo'
+
 require 'CSV'
-require 'mocha/minitest'
+require './test/test_helper'
 
 class ItemsRepoTest < Minitest::Test
 
@@ -22,7 +19,6 @@ class ItemsRepoTest < Minitest::Test
   end
 
   def test_it_is
-    require "pry"; binding.pry
     assert_instance_of ItemsRepo, @dummy_repo
   end
   #

@@ -1,8 +1,5 @@
-# require './test/test_helper'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/sales_engine'
-require_relative './analyst'
+require './test/test_helper'
+
 require 'CSV'
 
 class AnalystTest < Minitest::Test
@@ -24,7 +21,7 @@ class AnalystTest < Minitest::Test
   def test_average_items_per_merchant
     assert_equal 4, @sales_analyst.total_merchants
     assert_equal 5, @sales_analyst.total_items_across_all_merchants
-    assert_equal ["1", "2", "3", "4"], @sales_analyst.items_per_merchant.keys
+    assert_equal [1, 2, 3, 4], @sales_analyst.items_per_merchant.keys
     assert_equal 1.25, @sales_analyst.average_items_per_merchant
   end
 
@@ -43,27 +40,27 @@ class AnalystTest < Minitest::Test
   end
 
   def test_average_items_price_per_merchant
-    assert_equal 2, @sales_analyst.items_to_be_averaged("2").count
+    assert_equal 0, @sales_analyst.items_to_be_averaged("2").count
     assert_equal 201000, @sales_analyst.sum_item_price_for_merchant("2")
     assert_equal 100500, @sales_analyst.average_item_price_for_merchant("2")
   end
 
   def test_average_average_price_per_merchant
     assert_equal 4, @sales_analyst.merchant_id_collection.count
-    assert_equal [200, 100500, 4500, 46000], @sales_analyst.average_item_prices_collection
-    assert_equal 151200, @sales_analyst.sum_average_prices_collections
-    assert_equal 37800, @sales_analyst.average_average_price_per_merchant
+    assert_equal [2, 1005, 45, 460], @sales_analyst.average_item_prices_collection
+    assert_equal 1512, @sales_analyst.sum_average_prices_collections
+    assert_equal 378, @sales_analyst.average_average_price_per_merchant
   end
 
   def test_golden_items
-    assert_equal [-37600, 62700, -33300, 8200], @sales_analyst.difference_of_item_prices_and_total_average_item_prices
-    assert_equal [0.141376e10, 0.393129e10, 0.110889e10, 0.6724e8], @sales_analyst.squares_of_average_prices_differences
-    assert_equal 6521180000, @sales_analyst.sum_of_square_item_price_differences
+    assert_equal [-376, 627, -333, 82], @sales_analyst.difference_of_item_prices_and_total_average_item_prices
+    assert_equal [141376, 393129, 110889, 6724], @sales_analyst.squares_of_average_prices_differences
+    assert_equal 652118, @sales_analyst.sum_of_square_item_price_differences
     assert_equal 3, @sales_analyst.std_dev_item_price_variance
-    assert_equal 2173726666, @sales_analyst.item_price_sum_and_variance_quotient
-    assert_equal 46623.24, @sales_analyst.item_price_standard_deviation
-    assert_equal 93246.48, @sales_analyst.double_item_price_standard_deviation
-    assert_equal 131046.48, @sales_analyst.golden_items_critera
+    assert_equal 217372, @sales_analyst.item_price_sum_and_variance_quotient
+    assert_equal 466.23, @sales_analyst.item_price_standard_deviation
+    assert_equal 932.46, @sales_analyst.double_item_price_standard_deviation
+    assert_equal 1310.46, @sales_analyst.golden_items_critera
     assert_equal 5, @sales_analyst.item_collection.count
     assert_equal 1, @sales_analyst.golden_items.count
   end

@@ -19,7 +19,9 @@ class ItemsRepo
   end
 
   def find_all_by_price (price)
-    all.find_all{|value| value.unit_price == price}
+    all.find_all do |value| 
+      value.unit_price == price
+    end
   end
 
   def group_by_merchant_id
@@ -47,6 +49,12 @@ class ItemsRepo
    :merchant_id => attributes[:merchant_id],
     :created_at => attributes[:created_at],
     :updated_at => attributes[:updated_at]},self)
+  end
+
+  def delete(id)
+    @collections.delete_if do |key,value|
+      value.id == id
+    end
   end
 
 end

@@ -61,7 +61,6 @@ class MerchantRepositoryTest < Minitest::Test
     actual = @dummy_repo.collections.values[-1].id
     expected = @dummy_repo.max_id
     assert_equal 12334142, actual
-    require "pry"; binding.pry
     assert_equal expected + 1, actual.to_i+1
   end
 

@@ -67,7 +67,7 @@ class Analyst
     collector_array = []
     items_per_merchant.each do |item_id, items|
       if items.count.to_f > (standard_deviation + average_items_per_merchant)
-        @engine.merchants.merchant_info.each do |merchant_id, total_merchants|
+        @engine.merchants.collections.each do |merchant_id, total_merchants|
           if total_merchants.id == item_id
             collector_array << total_merchants.name
           end
