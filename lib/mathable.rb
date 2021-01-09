@@ -7,4 +7,32 @@ module Mathable
   def percentage(sum, total)
     ((sum / total.to_f) * 100).round(2)
   end
+
+  def difference_of_each_x_and_y(num1, num2)
+    num1.map do |i|
+      i - num2
+    end
+  end
+
+  def squares_of_differences(num)
+    num.map do |difference|
+      difference ** 2
+    end
+  end
+
+  def sum_of_square_differences(squares_of_differences)
+    squares_of_differences.sum
+  end
+
+  def std_dev_variance(num)
+    num.count - 1
+  end
+
+  def sum_and_variance_quotient(sum_of_square_differences, std_dev_variance)
+    sum_of_square_differences / std_dev_variance
+  end
+
+  def standard_deviation(sum_and_variance_quotient)
+    (sum_and_variance_quotient ** 0.5).round(2)
+  end
 end

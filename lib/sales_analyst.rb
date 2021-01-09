@@ -10,15 +10,15 @@ class SalesAnalyst
   end
 
   def total_items_across_all_merchants
-    items_per_merchant.values.flatten.count.to_f
+    @engine.items_per_merchant.values.flatten.count.to_f
   end
 
   def total_merchants
-    items_per_merchant.keys.count
+    @engine.items_per_merchant.keys.count
   end
 
   def average_items_per_merchant
-    (total_items_across_all_merchants / total_merchants).round(2)
+    average(total_items_across_all_merchants, total_merchants)
   end
 
   def all_items_by_merchant
@@ -28,27 +28,23 @@ class SalesAnalyst
   end
 
   def difference_of_item_and_average_items
-    all_items_by_merchant.map do |item|
-      item - average_items_per_merchant
-    end
+    difference_of_each_x_and_y(all_items_by_merchant, average_items_per_merchant)
   end
 
-  def squares_of_differences
-    difference_of_item_and_average_items.map do |difference|
-      difference ** 2
-    end
+  def squares_of_item_and_average_item_differences
+    squares_of_differences(difference_of_item_and_average_items)
   end
 
-  def sum_of_square_differences
-    squares_of_differences.sum
+  def sum_of_item_square_differences
+    squares_of_item_and_average_item_differences.sum
   end
 
-  def std_dev_variance
-    all_items_by_merchant.count - 1
+  def item_std_dev_variance
+    std_dev_variance(all_items_by_merchant)
   end
 
-  def sum_and_variance_quotient
-    sum_of_square_differences / std_dev_variance
+  def item_sum_and_variance_quotient
+    sum_and_variance_quotient(sum_of_item_square_differences, item_std_dev_variance)
   end
 
   def standard_deviation
