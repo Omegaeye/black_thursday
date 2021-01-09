@@ -16,7 +16,7 @@ class Transaction
     @invoice_id          = data[:invoice_id].to_i
     @credit_card_number  = data[:credit_card_number]
     @credit_card_expiration_date = data[:credit_card_expiration_date]
-    @result              = data[:result]
+    @result              = data[:result].intern
     @created_at          = Time.parse(data[:created_at].to_s)
     @updated_at          = Time.parse(data[:updated_at].to_s)
     @repository          = repository
