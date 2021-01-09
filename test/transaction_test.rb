@@ -1,5 +1,4 @@
-require 'bigdecimal'
-require './test/test_helper'
+require_relative './test_helper'
 
 class TransactionTest < Minitest::Test
 

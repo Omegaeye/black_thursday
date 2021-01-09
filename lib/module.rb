@@ -69,8 +69,8 @@ module Methods
   end
 
   def delete(id)
-    all.delete_if do |element| 
-      element.id == id
+    @collections.delete_if do |key,value|
+      value.id == id
     end
   end
 end
