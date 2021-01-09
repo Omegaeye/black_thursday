@@ -1,6 +1,4 @@
-require './test/test_helper'
-
-require 'CSV'
+require_relative './test_helper'
 
 class AnalystTest < Minitest::Test
 

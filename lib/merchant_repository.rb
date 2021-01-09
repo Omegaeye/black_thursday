@@ -16,7 +16,7 @@ class MerchantRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{@collections.size} rows>"
   end
 
   def find_all_by_name(search_string)
