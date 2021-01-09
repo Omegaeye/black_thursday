@@ -8,10 +8,6 @@ class SalesAnalyst < SalesEngine
     @engine = engine
   end
 
-  def total_items_across_all_merchants
-    items_per_merchant.values.flatten.count.to_f
-  end
-
   def total_merchants
     items_per_merchant.keys.count
   end

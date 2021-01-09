@@ -20,6 +20,10 @@ class SalesEngine
   end
 
   def items_per_merchant
-    @engine.items.group_by_merchant_id
+    @items.group_by_merchant_id
+  end
+
+  def total_items_across_all_merchants
+    items_per_merchant.values.flatten.count.to_f
   end
 end
