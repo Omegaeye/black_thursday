@@ -2,22 +2,23 @@ require 'CSV'
 require 'time'
 require 'bigdecimal'
 require 'bigdecimal/util'
-require './lib/module'
-require './lib/transaction'
+require_relative './module'
+require_relative './transaction'
+require_relative './sales_engine'
 
 class TransactionRepo
   include Methods
   attr_reader :collections
 
   def populate_collection
-    items = Hash.new{|h, k| h[k] = [] }
+    transaction = Hash.new{|h, k| h[k] = [] }
     CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
-      items[data[:id]] = Transaction.new(data, self)
+      transaction[data[:id]] = Transaction.new(data, self)
     end
-      items
+      transaction
   end
 
-  def test_find_all_by_credit_card_number(credit_card_number)
+  def find_all_by_credit_card_number(credit_card_number)
     all.find_all do |value|
       value.credit_card_number == credit_card_number
     end

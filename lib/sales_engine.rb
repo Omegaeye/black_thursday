@@ -2,13 +2,14 @@ require_relative './items_repo'
 require_relative './merchant_repository'
 require_relative './analyst'
 require_relative './invoice_repo'
-
+require_relative './transaction_repo'
 
 class SalesEngine
   attr_reader :items,
               :merchants,
               :analyst,
-              :invoices
+              :invoices,
+              :transactions
 
   def self.from_csv(data)
     new(data)
@@ -19,5 +20,6 @@ class SalesEngine
     @merchants = MerchantRepository.new(data[:merchants], self)
     @analyst = Analyst.new(self)
     @invoices = InvoiceRepo.new(data[:invoices], self)
+    @transactions = TransactionRepo.new(data[:transactions], self)
   end
 end
