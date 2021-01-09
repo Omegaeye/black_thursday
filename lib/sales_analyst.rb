@@ -1,11 +1,16 @@
 require 'CSV'
 require_relative './sales_engine'
+require_relative './mathable'
 
-
-class SalesAnalyst < SalesEngine
+class SalesAnalyst
+  include Mathable
 
   def initialize(engine)
     @engine = engine
+  end
+
+  def total_items_across_all_merchants
+    items_per_merchant.values.flatten.count.to_f
   end
 
   def total_merchants
@@ -17,7 +22,7 @@ class SalesAnalyst < SalesEngine
   end
 
   def all_items_by_merchant
-    items_per_merchant.map do |merchant, items|
+    @engine.items_per_merchant.map do |merchant, items|
       items.count
     end
   end

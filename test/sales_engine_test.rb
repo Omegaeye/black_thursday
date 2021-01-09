@@ -17,6 +17,5 @@ class SalesEngineTest < Minitest::Test
 
   def test_items_per_merchant
     assert_equal 4, @engine.items_per_merchant.count
-    assert_equal 5, @engine.total_items_across_all_merchants
   end
 end
