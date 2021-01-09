@@ -7,9 +7,9 @@ class Item
                 :description,
                 :unit_price,
                 :updated_at
-  attr_reader :id,
-              :merchant_id,
-              :created_at
+  attr_reader   :id,
+                :merchant_id,
+                :created_at
 
 
   def initialize (data, repository)
@@ -28,10 +28,10 @@ class Item
   end
 
   def update_attributes (new_attributes )
-    @name = new_attributes[:name] unless new_attributes[:name] == nil
+    @name        = new_attributes[:name]
     @description = new_attributes[:description]
-    @unit_price = new_attributes[:unit_price]
-    @updated_at = new_attributes[:updated_at] = Time.now
+    @unit_price  = new_attributes[:unit_price]
+    @updated_at  = new_attributes[:updated_at] = Time.now
   end
 
 end
