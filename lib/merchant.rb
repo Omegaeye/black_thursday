@@ -1,4 +1,5 @@
-require './lib/merchant_repository'
+require 'time'
+require_relative './merchant_repository'
 
 class Merchant
 
@@ -9,7 +10,7 @@ class Merchant
 
   def initialize(data, repository)
     @repository  = repository
-    @id          = data[:id]
+    @id          = data[:id].to_i
     @name        = data[:name]
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)

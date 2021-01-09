@@ -1,11 +1,11 @@
 require_relative './sales_engine'
 require_relative './merchant'
 require_relative './module'
+require 'time'
 
 class MerchantRepository
   include Methods
-  attr_reader :data,
-              :collections
+  attr_reader :collections
 
   def populate_collection
     items = Hash.new{|h, k| h[k] = [] }
@@ -15,19 +15,16 @@ class MerchantRepository
     items
   end
 
+  def inspect
+    "#<#{self.class} #{@merchants.size} rows>"
+  end
+
   def create(attributes)
-      @collections[new_id.to_s] =
+      @collections[attributes[:id]] =
       Merchant.new({
-                :id => new_id.to_s,
-              :name => attributes[:name].downcase,
-        :created_at => attributes[:created_at],
-        :updated_at => attributes[:updated_at]}, self)
+                :id => new_id,
+              :name => attributes[:name],
+        :created_at => Time.now,
+        :updated_at => Time.now}, self)
   end
-
-  def delete(id)
-    @merchant_info.delete_if do |key, value|
-      key == id
-    end
-  end
-
 end

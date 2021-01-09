@@ -16,7 +16,7 @@ class Item
     @id          = data[:id].to_i
     @name        = data[:name]
     @description = data[:description]
-    @unit_price  = data[:unit_price].to_d
+    @unit_price  = BigDecimal.new(data[:unit_price].to_i / 100)
     @merchant_id = data[:merchant_id].to_i
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)
@@ -27,9 +27,9 @@ class Item
     @unit_price.to_f
   end
 
-  def update_attributes (new_attributes)
-    @name = new_attributes[:name]
-    @description = new_attributes[:description].downcase
+  def update_attributes (new_attributes )
+    @name = new_attributes[:name] unless new_attributes[:name] == nil
+    @description = new_attributes[:description]
     @unit_price = new_attributes[:unit_price]
     @updated_at = new_attributes[:updated_at] = Time.now
   end

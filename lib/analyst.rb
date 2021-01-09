@@ -1,5 +1,5 @@
 require 'CSV'
-require './lib/sales_engine'
+require_relative './sales_engine'
 
 class Analyst
 
