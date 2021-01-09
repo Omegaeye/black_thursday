@@ -56,12 +56,12 @@ module Methods
   end
 
   def update (id, update)
-    merchant = find_by_id(id)
-    merchant.update_attributes(update) unless merchant == nil
+    value_need_update = find_by_id(id)
+    value_need_update.update_attributes(update) unless value_need_update == nil
   end
 
   def max_id
-    max_id = (all.max_by{|item| item.id.to_i}).id.to_i
+    max_id = (all.max_by{|value| value.id.to_i}).id.to_i
   end
 
   def new_id
@@ -69,6 +69,6 @@ module Methods
   end
 
   def delete(id)
-    all.delete_if{|merchant|merchant.id == id}
+    all.delete_if{|value|value.id == id}
   end
 end
