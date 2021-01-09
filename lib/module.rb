@@ -69,6 +69,8 @@ module Methods
   end
 
   def delete(id)
-    all.delete_if{|merchant|merchant.id == id}
+    all.delete_if do |element| 
+      element.id == id
+    end
   end
 end
