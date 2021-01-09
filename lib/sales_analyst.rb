@@ -2,14 +2,10 @@ require 'CSV'
 require_relative './sales_engine'
 
 
-class Analyst
+class SalesAnalyst < SalesEngine
 
   def initialize(engine)
     @engine = engine
-  end
-
-  def items_per_merchant
-    @engine.items.group_by_merchant_id
   end
 
   def total_items_across_all_merchants

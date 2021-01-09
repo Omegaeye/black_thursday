@@ -1,7 +1,7 @@
 require 'CSV'
 require './test/test_helper'
 
-class AnalystTest < Minitest::Test
+class SalesAnalystTest < Minitest::Test
 
   def setup
     data_1 = {
@@ -10,11 +10,11 @@ class AnalystTest < Minitest::Test
             #Add CSV dummy files
             }
     sales_engine_1 = SalesEngine.new(data_1)
-    @sales_analyst = sales_engine_1.analyst
+    @sales_analyst = sales_engine_1.sales_analyst
   end
 
   def test_it_exists
-    assert_instance_of Analyst, @sales_analyst
+    assert_instance_of SalesAnalyst, @sales_analyst
   end
 
   def test_average_items_per_merchant
