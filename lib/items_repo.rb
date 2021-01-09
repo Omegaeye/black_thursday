@@ -3,8 +3,8 @@ require_relative './items'
 require 'time'
 require 'bigdecimal'
 require 'bigdecimal/util'
-require './lib/sales_engine'
-require './lib/module'
+require_relative './sales_engine'
+require_relative './module'
 
 class ItemsRepo
   include Methods
@@ -18,33 +18,31 @@ class ItemsRepo
     items
   end
 
-  def find_by_price (price)
-    all.values.find_all{|value| value.unit_price == price}
+  def find_all_by_price (price)
+    all.find_all{|value| value.unit_price == price}
   end
 
   def group_by_merchant_id
-    all.values.group_by{|value| value.merchant_id}
+    all.group_by{|value| value.merchant_id}
   end
 
   def find_all_with_description(description)
-  	desc_str = description.split
-
-  	all.values.find_all do |item|
-  		item if desc_str.any? {|string|  item.description.include? string.downcase}
-  	end
+  	all.find_all do |item|
+      item.description.downcase.include?(description.downcase)
+    end
   end
 
   def find_all_by_price_in_range(range)
-  	all.values.find_all do |item|
-  		range.include?(item.unit_price_to_dollars)
+  	all.find_all do |item|
+  		range.include?(item.unit_price)
   	end
   end
 
   def create(attributes)
     @collections[attributes[:id]] = Item.new({
             :id => new_id,
-          :name => attributes[:name].downcase,
-   :description => attributes[:description].downcase,
+          :name => attributes[:name],
+   :description => attributes[:description],
     :unit_price => attributes[:unit_price],
    :merchant_id => attributes[:merchant_id],
     :created_at => attributes[:created_at],

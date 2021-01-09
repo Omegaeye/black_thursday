@@ -2,7 +2,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/sales_engine'
-require './lib/analyst'
+require_relative './analyst'
 require 'CSV'
 
 class AnalystTest < Minitest::Test

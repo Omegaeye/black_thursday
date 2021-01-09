@@ -10,69 +10,65 @@ module Methods
   end
 
   def all
-    @collections
+    @collections.values
   end
 
   def find_by_id (id)
-    all.values.find do |value|
+    all.find do |value|
       value.id == id
     end
   end
 
   def find_by_name(name)
-  	all.values.find do |value|
-  		value.name == name
+  	all.find do |value|
+  		value.name.downcase == name.downcase
   	end
   end
 
   def find_all_by_name(search_string)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.name.downcase.include?(search_string.downcase)
     end
   end
 
   def find_all_by_merchant_id(id)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.merchant_id == id
     end
   end
 
   def find_all_by_customer_id(id)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.customer_id == id
     end
   end
 
   def find_all_by_invoice_id(id)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.invoice_id == id
     end
   end
 
   def find_all_by_status(status)
-    all.values.find_all do |value|
+    all.find_all do |value|
       value.status == status
     end
   end
 
-  def update (update)
-    id = update[:id]
-    id = find_by_id(id)
-    id.update_attributes(update)
+  def update (id, update)
+    merchant = find_by_id(id)
+    merchant.update_attributes(update) unless merchant == nil
   end
 
   def max_id
-    max_id = (all.values.max_by{|item| item.id.to_i}).id.to_i
+    max_id = (all.max_by{|item| item.id.to_i}).id.to_i
   end
 
   def new_id
     max_id + 1
   end
 
-  def delete(arg_id)
-  	index = arg_id.to_s
-  	all.delete_if do |key, item|
-  		item.id == index
-  	end
+  def delete(id)
+    all.delete_if{|merchant|merchant.id == id}
   end
 end
