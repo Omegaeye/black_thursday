@@ -1,6 +1,6 @@
-
 require 'CSV'
 require './test/test_helper'
+
 class AnalystTest < Minitest::Test
 
   def setup

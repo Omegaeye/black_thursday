@@ -8,12 +8,6 @@ class Analyst
     @engine = engine
   end
 
-  # def average_items_per_merchant
-  #   grouped_hash = @engine.items.group_by_merchant_id.map do |merchant|
-  #     merchant[1].count
-  # end
-  # end
-
   def items_per_merchant
     @engine.items.group_by_merchant_id
   end
@@ -69,7 +63,6 @@ class Analyst
     items_per_merchant.each do |item_id, items|
       if items.count.to_f > (standard_deviation + average_items_per_merchant)
         @engine.merchants.collections.each do |merchant_id, total_merchants|
-          binding.pry
           if total_merchants.id == item_id
             collector_array << total_merchants.name
           end
@@ -158,21 +151,9 @@ class Analyst
     items_per_merchant.values.flatten
   end
 
-  # def golden_items
-  #   golden_items_collector = []
-  #   item_collection.each do |item|
-  #     if item.unit_price > (double_item_price_standard_deviation + average_average_price_per_merchant)
-  #       golden_items_collector << item
-  #     end
-  #   end
-  #   golden_items_collector
-  # end
-
   def golden_items
     item_collection.find_all do |item|
       item.unit_price > golden_items_critera
     end
   end
-
-
 end

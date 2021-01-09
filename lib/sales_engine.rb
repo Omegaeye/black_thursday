@@ -14,5 +14,8 @@ class SalesEngine
     @items = ItemsRepo.new(data[:items], self)
     @merchants = MerchantRepository.new(data[:merchants], self)
     @analyst = Analyst.new(self)
+    @customer = CustomerRepo.new(data[:items], self)
+    @invoice = InvoiceItemRepo.new(data[:items], self)
+    @transaction = TransactionRepo.new(data[:items], self)
   end
 end
