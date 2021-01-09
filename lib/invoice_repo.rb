@@ -2,28 +2,38 @@ require 'CSV'
 require 'time'
 require 'bigdecimal'
 require 'bigdecimal/util'
-require './lib/module'
-require './lib/invoice'
+require_relative './sales_engine'
+require_relative './module'
+require_relative './invoice'
+
 
 class InvoiceRepo
   include Methods
-  attr_reader :collections
+  attr_reader :collections,
+              :data
 
   def populate_collection
-    items = Hash.new{|h, k| h[k] = [] }
-      CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
-      items[data[:id]] = Invoice.new(data, self)
-      end
-      items
+    invoices = Hash.new{|h, k| h[k] = [] }
+    CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
+      invoices[data[:id]] = Invoice.new(data, self)
     end
+      invoices
+  end
 
-    def create(attributes)
-      @collections[attributes[:id]] = Invoice.new({
+  def find_all_by_status(status)
+    all.find_all do |value|
+      value.status == status
+    end
+  end
+
+  def create(attributes)
+    @collections[attributes[:id]] = Invoice.new({
       :id          => new_id,
       :customer_id => attributes[:customer_id],
       :merchant_id => attributes[:merchant_id],
       :status      => attributes[:status],
       :created_at  => attributes[:created_at],
-      :updated_at  => attributes[:updated_at]}, self)
-    end
+      :updated_at  => attributes[:updated_at]},
+      self)
+  end
 end
