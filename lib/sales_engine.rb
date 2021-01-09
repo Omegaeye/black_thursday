@@ -18,4 +18,8 @@ class SalesEngine
     @invoice = InvoiceItemRepo.new(data[:items], self)
     @transaction = TransactionRepo.new(data[:items], self)
   end
+
+  def items_per_merchant
+    items.group_by_merchant_id
+  end
 end

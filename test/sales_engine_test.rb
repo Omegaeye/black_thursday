@@ -14,4 +14,8 @@ class SalesEngineTest < Minitest::Test
   def test_it_exists
     assert_instance_of SalesEngine, @engine
   end
+
+  def test_items_per_merchant
+    assert_equal 4, @engine.items_per_merchant.count
+  end
 end
