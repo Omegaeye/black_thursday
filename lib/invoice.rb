@@ -20,7 +20,7 @@ class Invoice
   end
 
   def update_attributes (new_attributes)
-    @status     = new_attributes[:status]
+    @status     = new_attributes[:status] unless new_attributes[:status] == nil
     @updated_at = new_attributes[:updated_at] = Time.now
   end
 end

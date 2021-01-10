@@ -1,11 +1,17 @@
 require_relative './sales_engine'
 require_relative './merchant'
 require_relative './module'
+require_relative './central_repo'
 require 'time'
 
-class MerchantRepository
-  include Methods
+class MerchantRepository < CentralRepo
   attr_reader :collections
+
+
+  def initialize(data, engine)
+    super
+  end
+
 
   def populate_collection
     merchants = Hash.new
@@ -30,7 +36,7 @@ class MerchantRepository
       :id         => new_id,
       :name       => attributes[:name],
       :created_at => Time.now,
-      :updated_at => Time.now}, 
+      :updated_at => Time.now},
       self)
   end
   def delete(id)

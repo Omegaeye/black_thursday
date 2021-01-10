@@ -5,10 +5,15 @@ require 'bigdecimal/util'
 require_relative './module'
 require_relative './transaction'
 require_relative './sales_engine'
+require_relative './central_repo'
 
-class TransactionRepo
-  include Methods
+class TransactionRepo < CentralRepo
   attr_reader :collections
+
+  def initialize(data, engine)
+    super
+  end
+
 
   def populate_collection
     transaction = Hash.new{|h, k| h[k] = [] }

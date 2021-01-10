@@ -2,7 +2,6 @@ require 'CSV'
 require_relative './sales_engine'
 
 class Analyst
-
   def initialize(engine)
     @engine = engine
   end
@@ -27,6 +26,10 @@ class Analyst
 
   def average_items_per_merchant
     (total_items_across_all_merchants / total_merchants).round(2)
+  end
+
+  def average_items_per_merchant_standard_deviation
+    average_items_per_merchant.standard_deviation
   end
 
   def all_items_by_merchant

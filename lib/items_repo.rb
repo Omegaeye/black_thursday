@@ -5,11 +5,17 @@ require 'bigdecimal/util'
 require_relative './sales_engine'
 require_relative './module'
 require_relative './items'
+require_relative './central_repo'
 
 
-class ItemsRepo
-  include Methods
+class ItemsRepo < CentralRepo
   attr_reader :collections
+
+
+  def initialize(data, engine)
+    super
+  end
+
 
   def populate_collection
     items = Hash.new{|h, k| h[k] = [] }
@@ -20,7 +26,7 @@ class ItemsRepo
   end
 
   def find_all_by_price (price)
-    all.find_all do |value| 
+    all.find_all do |value|
       value.unit_price == price
     end
   end

@@ -3,11 +3,15 @@ require 'time'
 require_relative './module'
 require_relative './customer'
 require_relative './sales_engine'
+require_relative './central_repo'
 
-class CustomerRepo
-  include Methods
+class CustomerRepo < CentralRepo
   attr_reader :collections,
               :data
+
+  def initialize(data, engine)
+    super
+  end
 
   def populate_collection
     customers = Hash.new{|h, k| h[k] = [] }
@@ -18,14 +22,14 @@ class CustomerRepo
   end
 
   def find_all_by_first_name(first_name)
-    all.find_all do |value|
-      value.first_name == first_name
+    all.find_all do |name|
+      name.first_name.downcase.include?(first_name.downcase)
     end
   end
 
   def find_all_by_last_name(last_name)
-    all.find_all do |value|
-      value.last_name == last_name
+    all.find_all do |l_name|
+      l_name.last_name.downcase.include?(last_name.downcase)
     end
   end
 

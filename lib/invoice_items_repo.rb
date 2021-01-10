@@ -5,16 +5,21 @@ require 'bigdecimal/util'
 require_relative './module'
 require_relative './invoice_items'
 require_relative './sales_engine'
+require_relative './central_repo'
 
-class InvoiceItemRepo
-  include Methods
+class InvoiceItemRepo < CentralRepo
   attr_reader :collections
+
+  def initialize(data, engine)
+    super
+  end
 
   def populate_collection
     invoice_items = Hash.new{|h, k| h[k] = [] }
       CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
         invoice_items[data[:id]] = InvoiceItem.new(data, self)
       end
+
         invoice_items
   end
 
