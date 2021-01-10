@@ -22,4 +22,15 @@ class SalesEngine
   def items_per_merchant
     @items.group_by_merchant_id
   end
+
+  def total_merchants
+    items_per_merchant.keys.count
+  end
+
+  def merchants_names
+    @merchants.collections.map do |id, merchant|
+      [id, merchant.name]
+    end
+  end
+
 end

@@ -18,7 +18,7 @@ class SalesAnalyst
   end
 
   def average_items_per_merchant
-    average(total_items_across_all_merchants, total_merchants)
+    average(total_items_across_all_merchants, @engine.total_merchants)
   end
 
   def all_items_by_merchant
@@ -27,20 +27,26 @@ class SalesAnalyst
     end
   end
 
-  def item_stand_deviation
+  def item_standard_deviation
     final_std_dev(all_items_by_merchant, average_items_per_merchant)
   end
 
+  def item_one_std_dev_above
+    sum_of(item_standard_deviation, average_items_per_merchant)
+  end
+
   def merchants_with_high_item_count
-    collector_array = []
-    items_per_merchant.each do |item_id, items|
-      if items.count.to_f > (standard_deviation + average_items_per_merchant)
-        @engine.merchants.collections.each do |merchant_id, total_merchants|
-          if total_merchants.id == item_id
-            collector_array << total_merchants.name
-          end
-        end
-      end
+    @engine.merchants_names.any? do |name|
+     require "pry"; binding.pry
+    # all_items_by_merchant.map do |item|
+    #   if item > (item_one_std_dev_above)
+    #     @engine.merchants_by_id.map do |merchant_id, merchant|
+    #       # require "pry"; binding.pry
+    #       if merchant.id == item
+    #         merchant.name
+    #       end
+    #     end
+    #   end
     end
   end
 

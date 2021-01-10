@@ -19,7 +19,6 @@ class SalesAnalystTest < Minitest::Test
 
   def test_average_items_per_merchant
     assert_equal 5, @sales_analyst.total_items_across_all_merchants
-    assert_equal 4, @sales_analyst.total_merchants
     assert_equal [1, 2, 3, 4], @sales_engine_1.items_per_merchant.keys
     assert_equal 1.25, @sales_analyst.average_items_per_merchant
     assert_equal [1, 2, 1, 1], @sales_analyst.all_items_by_merchant
@@ -31,13 +30,14 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.75, @sales_analyst.squares_of_differences([-0.25, 0.75, -0.25, -0.25]).sum
     assert_equal 3, @sales_analyst.std_dev_variance([1, 2, 1, 1])
     assert_equal 0.25, @sales_analyst.sum_and_variance_quotient(0.75, 3)
-    assert_equal 0.50, @sales_analyst.item_stand_deviation
+    assert_equal 0.50, @sales_analyst.item_standard_deviation
   end
-  #
-  # def test_merchants_with_high_item_count
-  #   skip
-  #   assert_equal ["Keckenbauer"], @sales_analyst.merchants_with_high_item_count
-  # end
+
+  def test_merchants_with_high_item_count
+    assert_equal 1.75, @sales_analyst.sum_of(0.50, 1.25)
+    assert_equal 1.75, @sales_analyst.item_one_std_dev_above
+    assert_equal ["Keckenbauer"], @sales_analyst.merchants_with_high_item_count
+  end
   #
   # def test_average_items_price_per_merchant
   #   skip

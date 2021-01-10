@@ -1,5 +1,9 @@
 module Mathable
 
+  def sum_of(num1, num2)
+    num1 + num2
+  end
+
   def average(sum, total)
     (sum / total.to_f).round(2)
   end
