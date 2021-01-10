@@ -20,13 +20,6 @@ module Mathable
     end
   end
 
-  def sum_of_square_differences(num)
-    sum_of_squares = num.map do |difference|
-      difference ** 2
-    end
-    sum_of_squares.sum
-  end
-
   def std_dev_variance(num)
     num.count - 1
   end

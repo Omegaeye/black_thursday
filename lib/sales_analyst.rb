@@ -27,32 +27,8 @@ class SalesAnalyst
     end
   end
 
-  def item_std_dev
+  def item_stand_deviation
     final_std_dev(all_items_by_merchant, average_items_per_merchant)
-  end
-
-  def difference_of_item_and_average_items
-    difference_of_each_x_and_y(all_items_by_merchant, average_items_per_merchant)
-  end
-
-  def squares_of_item_and_average_item_differences
-    squares_of_differences(difference_of_item_and_average_items)
-  end
-
-  def sum_of_item_square_differences
-    squares_of_item_and_average_item_differences.sum
-  end
-
-  def item_std_dev_variance
-    std_dev_variance(all_items_by_merchant)
-  end
-
-  def item_sum_and_variance_quotient
-    sum_and_variance_quotient(sum_of_item_square_differences, item_std_dev_variance)
-  end
-
-  def item_standard_deviation
-    standard_deviation(item_sum_and_variance_quotient)
   end
 
   def merchants_with_high_item_count
