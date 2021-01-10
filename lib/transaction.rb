@@ -27,8 +27,9 @@ class Transaction
   end
 
   def update_attributes (new_attributes)
-    @credit_card_number  = new_attributes[:credit_card_number]
-    @credit_card_expiration_date = new_attributes[:credit_card_expiration_date]
-    @result = new_attributes[:result]
+    @credit_card_number  = new_attributes[:credit_card_number] unless new_attributes[:credit_card_number] == nil
+    @credit_card_expiration_date = new_attributes[:credit_card_expiration_date] unless new_attributes[:credit_card_expiration_date] == nil
+    @result = new_attributes[:result] unless new_attributes[:result] == nil
+    @updated_at = Time.now
   end
 end

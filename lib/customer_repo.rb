@@ -3,11 +3,15 @@ require 'time'
 require_relative './module'
 require_relative './customer'
 require_relative './sales_engine'
+require_relative './central_repo'
 
-class CustomerRepo
-  include Methods
+class CustomerRepo < CentralRepo
   attr_reader :collections,
               :data
+
+  def initialize(data, engine)
+    super
+  end
 
   def populate_collection
     customers = Hash.new{|h, k| h[k] = [] }

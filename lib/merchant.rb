@@ -17,7 +17,7 @@ class Merchant
   end
 
   def update_attributes (new_attributes)
-    @name       = new_attributes[:name]
+    @name       = new_attributes[:name] unless new_attributes[:name] == nil
     @updated_at = new_attributes[:updated_at] = Time.now
   end
 end

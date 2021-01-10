@@ -3,14 +3,18 @@ require 'time'
 require 'bigdecimal'
 require 'bigdecimal/util'
 require_relative './sales_engine'
+require_relative './central_repo'
 require_relative './module'
 require_relative './invoice'
 
 
-class InvoiceRepo
-  include Methods
+class InvoiceRepo < CentralRepo
   attr_reader :collections,
               :data
+
+  def initialize(data, engine)
+    super
+  end
 
   def populate_collection
     invoices = Hash.new{|h, k| h[k] = [] }
