@@ -156,6 +156,7 @@ class SalesAnalyst
  end
 
  def average_invoices_per_merchant
+   (group_invoices_sum/group_total_invoice_merchant_sum).round(2)
  end
 
 end
