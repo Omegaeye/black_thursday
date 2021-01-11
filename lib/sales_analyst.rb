@@ -136,4 +136,34 @@ class SalesAnalyst
      item.unit_price > golden_items_critera
    end
  end
+
+ def average_invoices_by_day
+   average(@engine.total_of_all_invoices.flatten.count.to_f, @engine.invoices.all_invoices_by_day.keys.length)
+ end
+
+ def all_invoices_by_day_length_array
+   @engine.total_of_all_invoices.map{|day|day.length}
+ end
+
+
+ def average_invoices_by_day_std_dev
+   final_std_dev(all_invoices_by_day_length_array, average_invoices_by_day)
+ end
+
+ def invoice_one_std_dev_above
+   sum_of(average_invoices_by_day_std_dev, average_invoices_by_day)
+ end
+
+ def top_days_by_invoice_count
+   a = @engine.invoices.all_invoices_by_day.values.flatten
+     a.map do |a|
+     @engine.finding_invoices_by_day(a.created_at.strftime("%A")).count > invoice_one_std_dev_above
+   end
+ end
+
+ def invoice_status(status)
+   percentage(@engine.invoices.find_all_by_status(status).length,
+   @engine.invoices.all.length)
+ end
+
 end

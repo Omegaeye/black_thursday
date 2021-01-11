@@ -39,9 +39,5 @@ class MerchantRepository < CentralRepo
       :updated_at => Time.now},
       self)
   end
-  def delete(id)
-    @collections.delete_if do |key,value|
-      value.id == id
-    end
-  end
+  
 end

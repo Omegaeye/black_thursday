@@ -46,4 +46,12 @@ class SalesEngine
   def find_all_items_by_merchant_id(merchant_id)
     @items.all.find_all{|item|item.merchant_id == merchant_id}
   end
+
+  def total_of_all_invoices
+    @invoices.all_invoices_by_day.values
+  end
+
+  def finding_invoices_by_day(day)
+    total_of_all_invoices.flatten.find_all{|key| key.created_at.strftime("%A") == day}
+  end
 end
