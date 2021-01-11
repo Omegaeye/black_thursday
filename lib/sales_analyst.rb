@@ -135,14 +135,14 @@ class SalesAnalyst
    end
  end
 
- def group_invoices_by_merchant_id
-   @engine.invoices.collections.group_by do |key, invoice|
-     invoice.merchant_id
-   end
- end
+ # def group_invoices_by_merchant_id
+ #   @engine.invoices.collections.group_by do |key, invoice|
+ #     invoice.merchant_id
+ #   end
+ # end
 
  def group_invoices_by_merchant_id_values
-   group_invoices_by_merchant_id.map do |key, value|
+   @engine.group_invoices_by_merchant_id.map do |key, value|
     value.count
   end
  end
@@ -157,6 +157,10 @@ class SalesAnalyst
 
  def average_invoices_per_merchant
    (group_invoices_sum/group_total_invoice_merchant_sum).round(2)
+ end
+
+ def average_invoices_per_merchant_standard_deviation
+   final_std_dev(group_invoices_by_merchant_id_values, average_invoices_per_merchant)
  end
 
 end

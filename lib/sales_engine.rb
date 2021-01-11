@@ -47,5 +47,11 @@ class SalesEngine
     @items.all.find_all{|item|item.merchant_id == merchant_id}
   end
 
+  def group_invoices_by_merchant_id
+    @invoices.collections.group_by do |key, invoice|
+      invoice.merchant_id
+    end
+  end
+
 
 end
