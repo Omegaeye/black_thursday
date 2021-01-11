@@ -16,6 +16,12 @@ class InvoiceRepo < CentralRepo
     super
   end
 
+  def initialize(data, engine)
+    @data = data
+    @collections = populate_collection
+    @engine = engine
+  end
+
   def populate_collection
     invoices = Hash.new{|h, k| h[k] = [] }
     CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|

@@ -1,31 +1,29 @@
 require 'CSV'
 require_relative './sales_engine'
+<<<<<<< HEAD:lib/sales_analyst.rb
+require_relative './mathable'
+
+class SalesAnalyst
+  include Mathable
+
+=======
 
 class Analyst
+>>>>>>> master:lib/analyst.rb
   def initialize(engine)
     @engine = engine
   end
 
-  # def average_items_per_merchant
-  #   grouped_hash = @engine.items.group_by_merchant_id.map do |merchant|
-  #     merchant[1].count
-  # end
-  # end
-
-  def items_per_merchant
-    @engine.items.group_by_merchant_id
-  end
-
   def total_items_across_all_merchants
-    items_per_merchant.values.flatten.count.to_f
+    @engine.items_per_merchant.values.flatten.count.to_f
   end
 
   def total_merchants
-    items_per_merchant.keys.count
+    @engine.items_per_merchant.keys.count
   end
 
   def average_items_per_merchant
-    (total_items_across_all_merchants / total_merchants).round(2)
+    average(total_items_across_all_merchants, @engine.total_merchants)
   end
 
   def average_items_per_merchant_standard_deviation
@@ -33,40 +31,33 @@ class Analyst
   end
 
   def all_items_by_merchant
-    items_per_merchant.map do |merchant, items|
+    @engine.items_per_merchant.map do |merchant, items|
       items.count
     end
   end
 
-  def difference_of_item_and_average_items
-    all_items_by_merchant.map do |item|
-      item - average_items_per_merchant
-    end
+  def item_standard_deviation
+    final_std_dev(all_items_by_merchant, average_items_per_merchant)
   end
 
-  def squares_of_differences
-    difference_of_item_and_average_items.map do |difference|
-      difference ** 2
-    end
-  end
-
-  def sum_of_square_differences
-    squares_of_differences.sum
-  end
-
-  def std_dev_variance
-    all_items_by_merchant.count - 1
-  end
-
-  def sum_and_variance_quotient
-    sum_of_square_differences / std_dev_variance
-  end
-
-  def standard_deviation
-    (sum_and_variance_quotient ** 0.5).round(2)
+  def item_one_std_dev_above
+    sum_of(item_standard_deviation, average_items_per_merchant)
   end
 
   def merchants_with_high_item_count
+<<<<<<< HEAD:lib/sales_analyst.rb
+    @engine.merchants_names.any? do |name|
+     require "pry"; binding.pry
+    # all_items_by_merchant.map do |item|
+    #   if item > (item_one_std_dev_above)
+    #     @engine.merchants_by_id.map do |merchant_id, merchant|
+    #       # require "pry"; binding.pry
+    #       if merchant.id == item
+    #         merchant.name
+    #       end
+    #     end
+    #   end
+=======
     collector_array = []
     items_per_merchant.each do |item_id, items|
       if items.count.to_f > (standard_deviation + average_items_per_merchant)
@@ -76,8 +67,8 @@ class Analyst
           end
         end
       end
+>>>>>>> master:lib/analyst.rb
     end
-    collector_array
   end
 
   def items_to_be_averaged(merchant_number)
@@ -160,21 +151,9 @@ class Analyst
     items_per_merchant.values.flatten
   end
 
-  # def golden_items
-  #   golden_items_collector = []
-  #   item_collection.each do |item|
-  #     if item.unit_price > (double_item_price_standard_deviation + average_average_price_per_merchant)
-  #       golden_items_collector << item
-  #     end
-  #   end
-  #   golden_items_collector
-  # end
-
   def golden_items
     item_collection.find_all do |item|
       item.unit_price > golden_items_critera
     end
   end
-
-
 end

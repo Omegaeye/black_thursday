@@ -9,6 +9,12 @@ require_relative './central_repo'
 
 class TransactionRepo < CentralRepo
   attr_reader :collections
+  
+  def initialize(data, engine)
+    @data = data
+    @collections = populate_collection
+    @engine = engine
+  end
 
   def initialize(data, engine)
     super

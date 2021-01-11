@@ -13,6 +13,12 @@ class CustomerRepo < CentralRepo
     super
   end
 
+  def initialize(data, engine)
+    @data = data
+    @collections = populate_collection
+    @engine = engine
+  end
+
   def populate_collection
     customers = Hash.new{|h, k| h[k] = [] }
     CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+require 'CSV'
+require './test/test_helper'
+=======
 require_relative './test_helper'
+>>>>>>> master
 
 class SalesEngineTest < Minitest::Test
   def setup
@@ -12,5 +17,11 @@ class SalesEngineTest < Minitest::Test
 
   def test_it_exists
     assert_instance_of SalesEngine, @engine
+  end
+
+  def test_items_per_merchant
+    assert_equal 4, @engine.items_per_merchant.count
+    assert_equal 4, @engine.total_merchants
+    assert_equal 5, @engine.merchants_names.keys.count
   end
 end

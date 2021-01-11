@@ -21,5 +21,9 @@ require './lib/invoice_items_repo'
 require './lib/invoice_items'
 require './lib/customer'
 require './lib/customer_repo'
+<<<<<<< HEAD
+require './lib/sales_analyst'
+=======
 require './lib/analyst'
 require './lib/central_repo'
+>>>>>>> master
