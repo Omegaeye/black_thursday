@@ -16,7 +16,7 @@ class InvoiceItem
     @item_id     = data[:item_id].to_i
     @invoice_id  = data[:invoice_id].to_i
     @quantity    = data[:quantity].to_i
-    @unit_price  = data[:unit_price].to_d
+    @unit_price  = (BigDecimal(data[:unit_price].to_i) / 100)
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)
     @repository  = repository
@@ -27,7 +27,8 @@ class InvoiceItem
   end
 
   def update_attributes (new_attributes)
-    @quantity   = new_attributes[:quantity]
-    @unit_price = new_attributes[:unit_price]
+    @quantity   = new_attributes[:quantity] unless new_attributes[:quantity] == nil
+    @unit_price = new_attributes[:unit_price] unless new_attributes[:unit_price] == nil
+    @updated_at = Time.now
   end
 end

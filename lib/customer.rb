@@ -20,7 +20,8 @@ class Customer
   end
 
   def update_attributes (new_attributes)
-    @first_name = new_attributes[:first_name]
-    @last_name  = new_attributes[:last_name]
+    @first_name = new_attributes[:first_name] unless new_attributes[:first_name] == nil
+    @last_name  = new_attributes[:last_name] unless new_attributes[:last_name] == nil
+    @updated_at = Time.now
   end
 end

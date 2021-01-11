@@ -1,5 +1,4 @@
-require 'CSV'
-require './test/test_helper'
+require_relative './test_helper'
 
 class TransactionRepoTest < Minitest::Test
 

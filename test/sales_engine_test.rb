@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 require 'CSV'
 require './test/test_helper'
+=======
+require_relative './test_helper'
+>>>>>>> master
 
 class SalesEngineTest < Minitest::Test
   def setup

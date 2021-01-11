@@ -1,43 +1,47 @@
 require_relative './sales_engine'
 require_relative './merchant'
 require_relative './module'
+require_relative './central_repo'
+require 'time'
 
-class MerchantRepository
-  include Methods
-  attr_reader :data,
-    :collections
+class MerchantRepository < CentralRepo
+  attr_reader :collections
+
 
   def initialize(data, engine)
-    @data = data
-    @collections = populate_collection
-    @engine = engine
+    super
+  end
+
+
+  def populate_collection
+    merchants = Hash.new
+    CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
+      merchants[data[:id]] = Merchant.new(data, self)
+    end
+      merchants
   end
 
   def inspect
     "#<#{self.class} #{@collections.size} rows>"
   end
 
-  def populate_collection
-    items = Hash.new{|h, k| h[k] = [] }
-    CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
-      items[data[:id]] = Merchant.new(data, self)
+  def find_all_by_name(search_string)
+    all.find_all do |value|
+      value.name.downcase.include?(search_string.downcase)
     end
-    items
   end
 
   def create(attributes)
-    @collections[new_id.to_s] =
-    Merchant.new({
-                   :id => new_id.to_s,
-                   :name => attributes[:name].downcase,
-                   :created_at => attributes[:created_at],
-                   :updated_at => attributes[:updated_at]}, self)
+    @collections[attributes[:id]] = Merchant.new({
+      :id         => new_id,
+      :name       => attributes[:name],
+      :created_at => Time.now,
+      :updated_at => Time.now},
+      self)
   end
-
   def delete(id)
-    @merchant_info.delete_if do |key, value|
-      key == id
+    @collections.delete_if do |key,value|
+      value.id == id
     end
   end
-
 end

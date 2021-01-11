@@ -1,10 +1,15 @@
 require 'CSV'
 require_relative './sales_engine'
+<<<<<<< HEAD:lib/sales_analyst.rb
 require_relative './mathable'
 
 class SalesAnalyst
   include Mathable
 
+=======
+
+class Analyst
+>>>>>>> master:lib/analyst.rb
   def initialize(engine)
     @engine = engine
   end
@@ -19,6 +24,10 @@ class SalesAnalyst
 
   def average_items_per_merchant
     average(total_items_across_all_merchants, @engine.total_merchants)
+  end
+
+  def average_items_per_merchant_standard_deviation
+    average_items_per_merchant.standard_deviation
   end
 
   def all_items_by_merchant
@@ -36,6 +45,7 @@ class SalesAnalyst
   end
 
   def merchants_with_high_item_count
+<<<<<<< HEAD:lib/sales_analyst.rb
     @engine.merchants_names.any? do |name|
      require "pry"; binding.pry
     # all_items_by_merchant.map do |item|
@@ -47,6 +57,17 @@ class SalesAnalyst
     #       end
     #     end
     #   end
+=======
+    collector_array = []
+    items_per_merchant.each do |item_id, items|
+      if items.count.to_f > (standard_deviation + average_items_per_merchant)
+        @engine.merchants.collections.each do |merchant_id, total_merchants|
+          if total_merchants.id == item_id
+            collector_array << total_merchants.name
+          end
+        end
+      end
+>>>>>>> master:lib/analyst.rb
     end
   end
 

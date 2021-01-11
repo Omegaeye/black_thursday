@@ -3,10 +3,10 @@ require 'bigdecimal/util'
 require 'bigdecimal'
 class Transaction
 
+  attr_accessor :credit_card_expiration_date
   attr_reader :id,
               :invoice_id,
               :credit_card_number,
-              :credit_card_expiration_date,
               :result,
               :created_at,
               :updated_at
@@ -16,7 +16,7 @@ class Transaction
     @invoice_id          = data[:invoice_id].to_i
     @credit_card_number  = data[:credit_card_number]
     @credit_card_expiration_date = data[:credit_card_expiration_date]
-    @result              = data[:result]
+    @result              = data[:result].intern
     @created_at          = Time.parse(data[:created_at].to_s)
     @updated_at          = Time.parse(data[:updated_at].to_s)
     @repository          = repository
@@ -27,8 +27,9 @@ class Transaction
   end
 
   def update_attributes (new_attributes)
-    @credit_card_number  = new_attributes[:credit_card_number]
-    @credit_card_expiration_date = new_attributes[:credit_card_expiration_date]
-    @result = new_attributes[:result]
+    @credit_card_number  = new_attributes[:credit_card_number] unless new_attributes[:credit_card_number] == nil
+    @credit_card_expiration_date = new_attributes[:credit_card_expiration_date] unless new_attributes[:credit_card_expiration_date] == nil
+    @result = new_attributes[:result] unless new_attributes[:result] == nil
+    @updated_at = Time.now
   end
 end

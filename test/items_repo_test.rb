@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 require 'CSV'
 require './test/test_helper'
+=======
+require_relative './test_helper'
+>>>>>>> master
 
 class ItemsRepoTest < Minitest::Test
 
@@ -12,6 +16,9 @@ class ItemsRepoTest < Minitest::Test
     #         }
     # sales_engine = SalesEngine.new(data)
     @engine = mock
+    #
+    # @dummy_repo = ItemsRepo.new("./data/items.csv", @engine)
+
     @dummy_repo = ItemsRepo.new("./dummy_data/dummy_items.csv", @engine)
   end
 
@@ -27,11 +34,11 @@ class ItemsRepoTest < Minitest::Test
     assert_instance_of Hash, @dummy_repo.populate_collection
   end
 
-  # def test_it_can_gather_all_items
-  #   assert_instance_of Item, @dummy_repo.all.values[0]
-  #   assert_instance_of Item, @dummy_repo.all.values[-1]
-  #   assert_equal 4, @dummy_repo.all.values.length
-  # end
+  def test_it_can_gather_all_items
+    assert_instance_of Item, @dummy_repo.all[0]
+    assert_instance_of Item, @dummy_repo.all[-1]
+    assert_equal 5, @dummy_repo.all.length
+  end
 
   def test_it_can_group_by_merchant_id
     assert_equal [1, 2, 3, 4], @dummy_repo.group_by_merchant_id.keys
@@ -74,18 +81,30 @@ class ItemsRepoTest < Minitest::Test
 
   def test_update
     @dummy_repo.find_by_name("amazon")
+<<<<<<< HEAD
     assert_equal "amazon", @dummy_repo.all.values[2].name
     @dummy_repo.find_all_by_price(4500)
     assert_equal 4500, @dummy_repo.all.values[2].unit_price
+=======
+    assert_equal "amazon", @dummy_repo.all[2].name
+    @dummy_repo.find_all_by_price(4500)
+    assert_equal 4500, @dummy_repo.all[2].unit_price
+>>>>>>> master
     @dummy_repo.find_all_with_description("sell things")
-    assert_equal "we sell things", @dummy_repo.all.values[2].description
+    assert_equal "we sell things", @dummy_repo.all[2].description
 
     @dummy_repo.update({id: 567, name: "ebay", description: "we use to sell things", unit_price: 6400})
-    
+
     @dummy_repo.find_by_name("ebay")
+<<<<<<< HEAD
     assert_equal "ebay", @dummy_repo.all.values[2].name
     @dummy_repo.find_all_by_price(6400)
     assert_equal 6400, @dummy_repo.all.values[2].unit_price
+=======
+    assert_equal "ebay", @dummy_repo.all[2].name
+    @dummy_repo.find_all_by_price(6400)
+    assert_equal 6400, @dummy_repo.all[2].unit_price
+>>>>>>> master
   end
 
   def test_it_can_find_merchant_id
@@ -96,18 +115,19 @@ class ItemsRepoTest < Minitest::Test
 
   def test_it_can_create_new_item
       data ={
-        :id => "910",
+        :id => 910,
         :name => "chipotle",
         :description => "burritos!",
-        :unit_price => "49000",
+        :unit_price => 49000,
         :merchant_id =>	"5",
         :created_at => "2125-09-22 09:34:06 UTC",
         :updated_at => "2034-09-04 21:35:10 UTC"
       }
       @dummy_repo.create(data)
-      assert_instance_of Item, @dummy_repo.all.values[-1]
-      assert_equal true, @dummy_repo.all.keys.last == "910"
-      assert_equal 790, @dummy_repo.all.values[-1].id
+      assert_instance_of Item, @dummy_repo.all[-1]
+      assert_equal true, @dummy_repo.all.last.id == 790
+      assert_equal 790, @dummy_repo.all[-1].id
+      p @dummy_repo.all[-1].unit_price_to_dollars
     end
 
   def test_it_can_delete_items
