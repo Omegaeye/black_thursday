@@ -47,6 +47,7 @@ class SalesAnalystTest < Minitest::Test
     expected = [1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1]
     assert_equal expected, @sales_analyst.group_invoices_by_merchant_id_values
     assert_equal 20.0, @sales_analyst.group_invoices_sum
+    assert_equal 18.0, @sales_analyst.group_total_invoice_merchant_sum
     # assert_equal 1, @sales_analyst.average_invoices_per_merchant
   end
   #

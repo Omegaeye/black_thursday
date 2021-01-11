@@ -149,7 +149,11 @@ class SalesAnalyst
 
  def group_invoices_sum
    group_invoices_by_merchant_id_values.sum.to_f
- end 
+ end
+
+ def group_total_invoice_merchant_sum
+   group_invoices_by_merchant_id_values.count.to_f
+ end
 
  def average_invoices_per_merchant
  end
