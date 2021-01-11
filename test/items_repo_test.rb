@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-
 require 'CSV'
-require './test/test_helper'
-=======
 require_relative './test_helper'
->>>>>>> master
+
 
 class ItemsRepoTest < Minitest::Test
 
@@ -63,7 +59,7 @@ class ItemsRepoTest < Minitest::Test
 
   def test_it_can_find_by_description
     data_set = @dummy_repo.find_all_with_description("A large Yeti of sorts, casually devours a cow as the others watch numbly.")
-    
+
     sub_str = ["Size","3m"]
     data_set.each do |item|
       assert_equal true, item.description.include?("size") || item.description.include?("3m")
@@ -81,30 +77,24 @@ class ItemsRepoTest < Minitest::Test
 
   def test_update
     @dummy_repo.find_by_name("amazon")
-<<<<<<< HEAD
     assert_equal "amazon", @dummy_repo.all.values[2].name
     @dummy_repo.find_all_by_price(4500)
     assert_equal 4500, @dummy_repo.all.values[2].unit_price
-=======
     assert_equal "amazon", @dummy_repo.all[2].name
     @dummy_repo.find_all_by_price(4500)
     assert_equal 4500, @dummy_repo.all[2].unit_price
->>>>>>> master
     @dummy_repo.find_all_with_description("sell things")
     assert_equal "we sell things", @dummy_repo.all[2].description
 
     @dummy_repo.update({id: 567, name: "ebay", description: "we use to sell things", unit_price: 6400})
 
     @dummy_repo.find_by_name("ebay")
-<<<<<<< HEAD
     assert_equal "ebay", @dummy_repo.all.values[2].name
     @dummy_repo.find_all_by_price(6400)
     assert_equal 6400, @dummy_repo.all.values[2].unit_price
-=======
     assert_equal "ebay", @dummy_repo.all[2].name
     @dummy_repo.find_all_by_price(6400)
     assert_equal 6400, @dummy_repo.all[2].unit_price
->>>>>>> master
   end
 
   def test_it_can_find_merchant_id
