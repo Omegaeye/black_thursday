@@ -135,12 +135,6 @@ class SalesAnalyst
    end
  end
 
- # def group_invoices_by_merchant_id
- #   @engine.invoices.collections.group_by do |key, invoice|
- #     invoice.merchant_id
- #   end
- # end
-
  def group_invoices_by_merchant_id_values
    @engine.group_invoices_by_merchant_id.map do |key, value|
     value.count
