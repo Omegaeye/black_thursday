@@ -46,4 +46,6 @@ class SalesEngine
   def find_all_items_by_merchant_id(merchant_id)
     @items.all.find_all{|item|item.merchant_id == merchant_id}
   end
+
+
 end

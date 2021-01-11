@@ -23,8 +23,6 @@ class SalesAnalyst
    average(total_items_across_all_merchants, @engine.total_merchants)
  end
 
-
-
  def all_items_by_merchant
    @engine.items_per_merchant.map do |merchant, items|
      items.count
@@ -136,4 +134,21 @@ class SalesAnalyst
      item.unit_price > golden_items_critera
    end
  end
+
+ def group_invoices_by_merchant_id
+   @engine.invoices.collections.group_by do |key, invoice|
+     invoice.merchant_id
+   end
+ end
+
+ # def group_invoices_by_merchant_id_values
+ #   group_invoices_by_merchant_id.map do |key, value|
+ #    value.count
+ #  end
+ # end
+ #
+ # def average_invoices_per_merchant
+ #   group_invoices_by_merchant_id_values.sum / group_invoices_by_merchant_id_values.count
+ # end
+
 end

@@ -12,9 +12,10 @@ class InvoiceTest < Minitest::Test
       :created_at => "2016-01-11 11:51:37 UTC",
       :updated_at => Time.now}, @repository)
   end
+
   def test_it_exists
-      assert_instance_of Invoice, @data
-    end
+    assert_instance_of Invoice, @data
+  end
 
   def test_it_has_attributes
     assert_equal 1, @data.id
