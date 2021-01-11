@@ -44,8 +44,8 @@ class SalesAnalystTest < Minitest::Test
 
   def test_average_invoices_per_merchant
     assert_instance_of Hash, @sales_analyst.group_invoices_by_merchant_id
-    # expected = [1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1]
-    # assert_equal expected, @sales_analyst.group_invoices_by_merchant_id_values
+    expected = [1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+    assert_equal expected, @sales_analyst.group_invoices_by_merchant_id_values
     # assert_equal 1, @sales_analyst.average_invoices_per_merchant
   end
   #
