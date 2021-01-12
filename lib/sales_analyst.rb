@@ -120,4 +120,27 @@ class SalesAnalyst
      item.unit_price > golden_items_critera
    end
  end
+
+ def group_invoices_by_merchant_id_values
+   @engine.group_invoices_by_merchant_id.map do |key, value|
+    value.count
+  end
+ end
+
+ def group_invoices_sum
+   group_invoices_by_merchant_id_values.sum.to_f
+ end
+
+ def group_total_invoice_merchant_sum
+   group_invoices_by_merchant_id_values.count.to_f
+ end
+
+ def average_invoices_per_merchant
+   (group_invoices_sum/group_total_invoice_merchant_sum).round(2)
+ end
+
+ def average_invoices_per_merchant_standard_deviation
+   final_std_dev(group_invoices_by_merchant_id_values, average_invoices_per_merchant)
+ end
+
 end
