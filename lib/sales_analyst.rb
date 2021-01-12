@@ -171,5 +171,16 @@ class SalesAnalyst
    percentage(@engine.invoices.find_all_by_status(status).length,
    @engine.invoices.all.length)
  end
-  
+
+ def invoice_paid_in_full?(invoice_id)
+   successes = @engine.transactions_by_result(:success)
+   successes.any? do |success|
+     success.id == invoice_id
+   end
+ end
+
+ def invoice_total(invoice_id)
+   #returns the total $ amount of the Invoice with corresponding ID
+ end
+
 end

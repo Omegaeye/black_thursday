@@ -35,4 +35,8 @@ class SalesEngineTest < Minitest::Test
     assert_equal true, @engine.group_invoices_by_merchant_id.keys.all?{ |key| key.is_a? Integer}
   end
 
+  def test_it_can_find_successful_transactions
+    assert_equal 9, @engine.transactions_by_result(:success).count
+  end
+
 end

@@ -54,6 +54,7 @@ class SalesEngine
 
   def finding_invoices_by_day(day)
     total_of_all_invoices.flatten.find_all{|key| key.created_at.strftime("%A") == day}
+  end
 
   def group_invoices_by_merchant_id
     @invoices.collections.group_by do |key, invoice|
@@ -63,5 +64,9 @@ class SalesEngine
 
   def all_items_by_unit_price
     @items.all.group_by{|item|item.unit_price}
+  end
+
+  def transactions_by_result(result)
+    @transactions.find_all_by_result(result)
   end
 end

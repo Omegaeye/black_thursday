@@ -1,7 +1,5 @@
 require_relative './test_helper'
-
 class InvoiceItemTest < Minitest::Test
-
   def setup
     @repository = mock
     @data = InvoiceItem.new({
@@ -16,7 +14,6 @@ class InvoiceItemTest < Minitest::Test
   def test_it_exists
       assert_instance_of InvoiceItem, @data
     end
-
   def test_it_has_attributes
     assert_equal 6, @data.id
     assert_equal 7, @data.item_id
@@ -27,5 +24,4 @@ class InvoiceItemTest < Minitest::Test
     assert_equal expected, @data.created_at
     assert_instance_of Time, @data.updated_at
   end
-
 end
