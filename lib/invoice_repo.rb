@@ -36,6 +36,12 @@ class InvoiceRepo < CentralRepo
     end
   end
 
+  def all_invoices_by_day
+    all.map do |invoice|
+      invoice.created_at.strftime("%A")
+    end
+  end
+
   def create(attributes)
     @collections[attributes[:id]] = Invoice.new({
       :id          => new_id,

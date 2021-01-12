@@ -54,7 +54,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal "Keckenbauer", @sales_analyst.merchants_with_high_item_count[0].name
   end
 
-  
   def test_golden_items
     assert_equal 1, @sales_analyst.golden_items.count
   end
