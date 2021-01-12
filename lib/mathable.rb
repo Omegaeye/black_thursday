@@ -44,5 +44,5 @@ module Mathable
     e = (sum_and_variance_quotient(c, d))
     (standard_deviation(e))
   end
-
+  
 end
