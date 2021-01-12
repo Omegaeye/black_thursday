@@ -147,7 +147,7 @@ class SalesAnalyst
    collector = []
    @engine.group_invoices_by_merchant_id.each do |key, value|
      if value.count > (average_invoices_per_merchant + (average_invoices_per_merchant_standard_deviation * 2))
-       collector << @engine.merchants.find_by_id(key).name
+       collector << @engine.merchants.find_by_id(key)
      end
    end
    collector
@@ -157,10 +157,10 @@ class SalesAnalyst
    collector = []
    @engine.group_invoices_by_merchant_id.each do |key, value|
      if value.count < (average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2))
-       collector << @engine.merchants.find_by_id(key).name
+       collector << @engine.merchants.find_by_id(key)
      end
    end
-   collector
+   collector 
  end
 
  def average_invoices_by_day

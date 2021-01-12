@@ -40,7 +40,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_top_merchants_by_invoice_count
-    assert_equal ["LolaMarleys", "Keckenbauer"], @sales_analyst.top_merchants_by_invoice_count
+    assert_equal 2, @sales_analyst.top_merchants_by_invoice_count.count
   end
 
   def test_bottom_merchants_by_invoice_count
