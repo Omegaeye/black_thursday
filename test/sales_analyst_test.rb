@@ -102,4 +102,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 7, @sales_analyst.merchants_with_pending_invoices.count
   end
 
+  def test_merchants_with_only_one_item_registered_in_month
+    assert_equal 3, @sales_analyst.month_converter('March')
+    assert_equal [1, 2, 4, 8], @sales_analyst.items_grouped_by_month.keys
+    # assert_equal [], @sales_analyst.merchants_with_only_one_item_registered_in_month("March")
+  end
+
 end

@@ -246,6 +246,21 @@ def merchants_with_pending_invoices
   end
 end
 
+def month_converter(month)
+  Date::MONTHNAMES.index(month)
+end
+
+def items_grouped_by_month
+  @engine.items.collections.group_by do |keys, values|
+    values.created_at.to_s[5..6].to_i
+  end
+end
+
+
+# def merchants_with_only_one_item_registered_in_month(month)
+#
+# end
+
 
 
 end
