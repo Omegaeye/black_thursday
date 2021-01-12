@@ -31,8 +31,6 @@ class TransactionRepoTest < Minitest::Test
   end
 
   def test_find_all_by_result
-    # actual = @dummy_repo.find_all_by_result("failed")
-    # assert_equal "4463525332822998", actual[0].credit_card_number
     assert_equal 1, @dummy_repo.find_all_by_result(:failed).count
   end
 
@@ -58,7 +56,7 @@ class TransactionRepoTest < Minitest::Test
 
     @dummy_repo.update({id: 9,
                         credit_card_number: "1234567891011", credit_card_expiration_date: "0221",
-                        status: "success"})
+                        status: :success})
 
     actual = @dummy_repo.find_by_id(9)
     assert_equal "0221", actual.credit_card_expiration_date
@@ -70,7 +68,7 @@ class TransactionRepoTest < Minitest::Test
       :invoice_id => 8,
       :credit_card_number => "4242424242424242",
       :credit_card_expiration_date => "0220",
-      :result => "success",
+      :result => :success,
       :created_at => Time.now,
       :updated_at => Time.now  }
     @dummy_repo.create(data)

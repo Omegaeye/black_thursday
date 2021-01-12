@@ -37,12 +37,6 @@ class SalesEngine
     items_per_merchant.keys.count
   end
 
-  def merchants_names
-    @merchants.collections.map do |id, merchant|
-      [id, merchant.name]
-    end
-  end
-
   def find_all_items_by_merchant_id(merchant_id)
     @items.all.find_all{|item|item.merchant_id == merchant_id}
   end
