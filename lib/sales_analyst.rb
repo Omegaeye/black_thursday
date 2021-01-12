@@ -171,11 +171,20 @@ class SalesAnalyst
    @engine.invoices.all.length)
  end
 
- def merchants_with_only_one_item
+ def get_merchants_with_only_one_item
    items_per = @engine.items_per_merchant
    items_per.find_all do |id,items|
      items.length == 1
    end
+ end
+
+ def merchants_with_only_one_item
+   merchant_list = get_merchants_with_only_one_item
+   
+   only_merchants = merchant_list.flat_map do |pair|
+     @engine.find_merchant(pair[0]).values
+   end
+   #only_merchants.flatten
  end
   
 end

@@ -9,7 +9,7 @@ class Merchant
                 :created_at
 
   def initialize(data, repository)
-    @repository  = repository
+    #@repository  = repository
     @id          = data[:id].to_i
     @name        = data[:name]
     @created_at  = Time.parse(data[:created_at].to_s)
