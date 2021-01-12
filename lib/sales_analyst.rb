@@ -160,7 +160,7 @@ class SalesAnalyst
        collector << @engine.merchants.find_by_id(key)
      end
    end
-   collector 
+   collector
  end
 
  def average_invoices_by_day
@@ -200,15 +200,15 @@ class SalesAnalyst
    end
  end
 
- def merchants_with_only_one_item
-   merchant_list = get_merchants_with_only_one_item
-   
-   only_merchants = merchant_list.flat_map do |pair|
-     @engine.find_merchant(pair[0]).values
-   end
+ # def merchants_with_only_one_item
+ #   merchant_list = get_merchants_with_only_one_item
+ #
+ #   only_merchants = merchant_list.flat_map do |pair|
+ #     @engine.find_merchant(pair[0]).values
+ #   end
    #only_merchants.flatten
- end
-  
+ # end
+
  def invoice_paid_in_full?(invoice_id)
    successes = @engine.transactions_by_result(:success)
    successes.any? do |success|
@@ -223,5 +223,17 @@ class SalesAnalyst
    end
    price_by_invoice_id.sum
  end
+
+ def merchants_with_pending_invoices_group_by
+   @engine.invoices.collections.group_by do |key, value|
+     value.status
+   end
+ end
+
+def merchants_with_pending_invoices
+  merchants_with_pending_invoices_group_by[:pending]
+end 
+
+
 
 end
