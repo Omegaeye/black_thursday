@@ -37,8 +37,8 @@ class SalesAnalystTest < Minitest::Test
 
   def test_average_invoices_per_merchant_standard_deviation
     assert_equal 0.32, @sales_analyst.average_invoices_per_merchant_standard_deviation
-  end 
-  
+  end
+
   def test_it_can_calculate_standard_deviation
     assert_equal [-0.25, 0.75, -0.25, -0.25], @sales_analyst.difference_of_each_x_and_y([1, 2, 1, 1], 1.25)
     assert_equal [0.0625, 0.5625, 0.0625, 0.0625], @sales_analyst.squares_of_differences([-0.25, 0.75, -0.25, -0.25])
@@ -56,6 +56,15 @@ class SalesAnalystTest < Minitest::Test
 
   def test_golden_items
     assert_equal 1, @sales_analyst.golden_items.count
+  end
+
+  def test_invoice_paid_in_full
+    assert_equal true, @sales_analyst.invoice_paid_in_full?(1)
+    assert_equal false, @sales_analyst.invoice_paid_in_full?(11)
+  end
+
+  def test_invoice_total_by_invoice_id
+    assert_equal 0.348956e4, @sales_analyst.invoice_total(1)
   end
 
 end
