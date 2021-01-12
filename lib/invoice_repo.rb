@@ -52,4 +52,5 @@ class InvoiceRepo < CentralRepo
       :updated_at  => attributes[:updated_at]},
       self)
   end
+
 end
