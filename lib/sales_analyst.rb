@@ -143,6 +143,26 @@ class SalesAnalyst
    final_std_dev(group_invoices_by_merchant_id_values, average_invoices_per_merchant)
  end
 
+ def top_merchants_by_invoice_count
+   collector = []
+   @engine.group_invoices_by_merchant_id.each do |key, value|
+     if value.count > (average_invoices_per_merchant + (average_invoices_per_merchant_standard_deviation * 2))
+       collector << @engine.merchants.find_by_id(key)
+     end
+   end
+   collector
+ end
+
+ def bottom_merchants_by_invoice_count
+   collector = []
+   @engine.group_invoices_by_merchant_id.each do |key, value|
+     if value.count < (average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2))
+       collector << @engine.merchants.find_by_id(key)
+     end
+   end
+   collector 
+ end
+
  def average_invoices_by_day
    average(@engine.total_of_all_invoices.flatten.count.to_f, @engine.invoices.all_invoices_by_day.keys.length)
  end
@@ -150,7 +170,6 @@ class SalesAnalyst
  def all_invoices_by_day_length_array
    @engine.total_of_all_invoices.map{|day|day.length}
  end
-
 
  def average_invoices_by_day_std_dev
    final_std_dev(all_invoices_by_day_length_array, average_invoices_by_day)
@@ -186,5 +205,4 @@ class SalesAnalyst
    end
    price_by_invoice_id.sum
  end
-
 end

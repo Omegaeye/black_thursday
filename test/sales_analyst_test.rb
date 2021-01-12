@@ -28,15 +28,24 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_average_invoices_per_merchant
-    expected = [1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+    expected = [3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     assert_equal expected, @sales_analyst.group_invoices_by_merchant_id_values
     assert_equal 20.0, @sales_analyst.group_invoices_sum
-    assert_equal 18.0, @sales_analyst.group_total_invoice_merchant_sum
-    assert_equal 1.11, @sales_analyst.average_invoices_per_merchant
+    assert_equal 15, @sales_analyst.group_total_invoice_merchant_sum
+    assert_equal 1.33, @sales_analyst.average_invoices_per_merchant
   end
 
   def test_average_invoices_per_merchant_standard_deviation
-    assert_equal 0.32, @sales_analyst.average_invoices_per_merchant_standard_deviation
+
+    assert_equal 0.72, @sales_analyst.average_invoices_per_merchant_standard_deviation
+  end
+
+  def test_top_merchants_by_invoice_count
+    assert_equal 2, @sales_analyst.top_merchants_by_invoice_count.count
+  end
+
+  def test_bottom_merchants_by_invoice_count
+    assert_equal [], @sales_analyst.bottom_merchants_by_invoice_count
   end
 
   def test_it_can_calculate_standard_deviation
@@ -66,5 +75,4 @@ class SalesAnalystTest < Minitest::Test
   def test_invoice_total_by_invoice_id
     assert_equal 0.348956e4, @sales_analyst.invoice_total(1)
   end
-
 end
