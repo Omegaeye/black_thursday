@@ -58,4 +58,13 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1, @sales_analyst.golden_items.count
   end
 
+  def test_only_one_item
+    actual = @sales_analyst.merchants_with_only_one_item
+    actual.each do |merchant_id|
+      assert_instance_of Integer,  merchant_id[0]
+      assert_instance_of Item, merchant_id[1][0]
+      assert_equal 1, merchant_id[1].length
+    end
+  end
+
 end
