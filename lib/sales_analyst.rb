@@ -151,7 +151,6 @@ class SalesAnalyst
    @engine.total_of_all_invoices.map{|day|day.length}
  end
 
-
  def average_invoices_by_day_std_dev
    final_std_dev(all_invoices_by_day_length_array, average_invoices_by_day)
  end
@@ -170,6 +169,13 @@ class SalesAnalyst
  def invoice_status(status)
    percentage(@engine.invoices.find_all_by_status(status).length,
    @engine.invoices.all.length)
+ end
+
+ def merchants_with_only_one_item
+   items_per = @engine.items_per_merchant
+   items_per.find_all do |id,items|
+     items.length == 1
+   end
  end
   
 end
