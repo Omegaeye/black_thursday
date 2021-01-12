@@ -43,6 +43,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal ["LolaMarleys", "Keckenbauer"], @sales_analyst.top_merchants_by_invoice_count
   end
 
+  def test_bottom_merchants_by_invoice_count
+    assert_equal [], @sales_analyst.bottom_merchants_by_invoice_count
+  end
+
   def test_it_can_calculate_standard_deviation
     assert_equal [-0.25, 0.75, -0.25, -0.25], @sales_analyst.difference_of_each_x_and_y([1, 2, 1, 1], 1.25)
     assert_equal [0.0625, 0.5625, 0.0625, 0.0625], @sales_analyst.squares_of_differences([-0.25, 0.75, -0.25, -0.25])
