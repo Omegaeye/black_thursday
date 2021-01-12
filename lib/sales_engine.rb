@@ -53,5 +53,7 @@ class SalesEngine
     end
   end
 
-
+  def all_items_by_unit_price
+    @items.all.group_by{|item|item.unit_price}
+  end
 end
