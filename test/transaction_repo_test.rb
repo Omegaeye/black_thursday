@@ -54,7 +54,7 @@ class TransactionRepoTest < Minitest::Test
     actual = @dummy_repo.find_all_by_invoice_id(1752)
     assert_equal "4463525332822998", actual[0].credit_card_number
 
-    @dummy_repo.update({id: 9,
+    @dummy_repo.update( 9, {id: 9,
                         credit_card_number: "1234567891011", credit_card_expiration_date: "0221",
                         status: :success})
 

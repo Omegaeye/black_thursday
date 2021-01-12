@@ -51,7 +51,7 @@ class InvoiceItemRepoTest < Minitest::Test
     actual = @dummy_repo.find_by_id(6)
     assert_equal 263539664, actual.item_id
 
-    @dummy_repo.update({id: 6, quantity: 355, unit_price: 1000})
+    @dummy_repo.update( 6, {id: 6, quantity: 355, unit_price: 1000})
 
     actual = @dummy_repo.find_by_id(6)
     assert_equal 355, actual.quantity

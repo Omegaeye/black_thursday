@@ -16,8 +16,8 @@ class InvoiceRepoTest < Minitest::Test
   end
 
   def test_it_can_find_merchant_id
-    actual = @dummy_repo.find_all_by_merchant_id(12335938).flatten
-    assert_equal 12335938, actual[0].merchant_id
+    actual = @dummy_repo.find_all_by_merchant_id(17)
+    assert_equal 17, actual[0].merchant_id
   end
 
   def test_it_can_find_by_customer_id
@@ -26,9 +26,9 @@ class InvoiceRepoTest < Minitest::Test
   end
 
   def test_find_all_by_status
-    actual = @dummy_repo.find_all_by_status("pending")
+    actual = @dummy_repo.find_all_by_status(:pending)
     assert_equal 9, actual.length
-    assert_equal "pending", actual[0].status
+    assert_equal :pending, actual[0].status
   end
 
   def test_it_can_create_new_item
@@ -36,7 +36,7 @@ class InvoiceRepoTest < Minitest::Test
       :id => 910,
       :customer_id => 10,
       :merchant_id => 22335938,
-      :status => "pending",
+      :status => :pending,
       :created_at => "2125-09-22 09:34:06 UTC",
       :updated_at => "2034-09-04 21:35:10 UTC"
       }
@@ -47,18 +47,18 @@ class InvoiceRepoTest < Minitest::Test
 
   def test_update
     actual = @dummy_repo.find_by_id(20)
-    assert_equal "shipped", actual.status
-    actual = @dummy_repo.find_all_by_merchant_id(12335938)
+    assert_equal :shipped, actual.status
+    actual = @dummy_repo.find_all_by_merchant_id(1)
     assert_equal 1, actual[0].customer_id
 
-    @dummy_repo.update({id: 20, status: "pending"})
+    @dummy_repo.update(20, {id: 20, status: :pending})
 
     actual = @dummy_repo.find_by_id(20)
-    assert_equal "pending", actual.status
+    assert_equal :pending, actual.status
   end
 
   def test_delete
-    data ={
+    data = {
       :id => 910,
       :customer_id => 10,
       :merchant_id => 22335938,
