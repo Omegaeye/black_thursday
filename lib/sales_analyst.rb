@@ -192,6 +192,22 @@ class SalesAnalyst
    percentage(@engine.invoices.find_all_by_status(status).length,
    @engine.invoices.all.length)
  end
+
+ def get_merchants_with_only_one_item
+   items_per = @engine.items_per_merchant
+   items_per.find_all do |id,items|
+     items.length == 1
+   end
+ end
+
+ def merchants_with_only_one_item
+   merchant_list = get_merchants_with_only_one_item
+   
+   only_merchants = merchant_list.flat_map do |pair|
+     @engine.find_merchant(pair[0]).values
+   end
+   #only_merchants.flatten
+ end
   
  def invoice_paid_in_full?(invoice_id)
    successes = @engine.transactions_by_result(:success)

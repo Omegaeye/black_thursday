@@ -37,6 +37,13 @@ class SalesEngine
     items_per_merchant.keys.count
   end
 
+
+  def find_merchant(merchant_id)
+    @merchants.collections.select do |id, merchant|
+      merchant_id == merchant.id
+    end
+  end
+
   def find_all_items_by_merchant_id(merchant_id)
     @items.all.find_all{|item|item.merchant_id == merchant_id}
   end

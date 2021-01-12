@@ -19,7 +19,7 @@ class Transaction
     @result              = data[:result].intern
     @created_at          = Time.parse(data[:created_at].to_s)
     @updated_at          = Time.parse(data[:updated_at].to_s)
-    @repository          = repository
+    #@repository          = repository
   end
 
   def unit_price_to_dollars
