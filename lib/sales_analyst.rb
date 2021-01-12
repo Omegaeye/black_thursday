@@ -114,11 +114,18 @@ class SalesAnalyst
    @engine.items_per_merchant.values.flatten
  end
 
+ def golden_prices
+   a = golden_items_critera
+   items = @engine.items.group_by_unit_price
+   items.find_all do |key, value|
+      key > a
+    end.flatten
+ end
+
  def golden_items
-   items =item_collection
-   items.find_all do |item|
-     item.unit_price > golden_items_critera
-   end
+   golden_prices.map do |price|
+   @engine.items.find_all_by_price(price.first)
+ end
  end
 
  def group_invoices_by_merchant_id_values
@@ -160,7 +167,7 @@ class SalesAnalyst
        collector << @engine.merchants.find_by_id(key)
      end
    end
-   collector 
+   collector
  end
 
  def average_invoices_by_day
@@ -192,7 +199,7 @@ class SalesAnalyst
    percentage(@engine.invoices.find_all_by_status(status).length,
    @engine.invoices.all.length)
  end
-  
+
  def invoice_paid_in_full?(invoice_id)
    successes = @engine.transactions_by_result(:success)
    successes.any? do |success|

@@ -35,6 +35,10 @@ class ItemsRepo < CentralRepo
     all.group_by{|value| value.merchant_id}
   end
 
+  def group_by_unit_price
+    all.group_by{|value|value.unit_price}
+  end
+
   def find_all_with_description(description)
   	all.find_all do |item|
       item.description.downcase.include?(description.downcase)
