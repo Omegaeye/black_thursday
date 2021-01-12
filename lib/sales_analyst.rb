@@ -224,15 +224,21 @@ class SalesAnalyst
    price_by_invoice_id.sum
  end
 
- def merchants_with_pending_invoices_group_by
+ def invoices_group_by_status
    @engine.invoices.collections.group_by do |key, value|
      value.status
    end
  end
 
-def merchants_with_pending_invoices
-  merchants_with_pending_invoices_group_by[:pending]
-end 
+def invoices_with_pending_status
+  invoices_group_by_status[:pending]
+end
+
+def extract_merchant_ids
+  invoices_with_pending_status.map do |invoice|
+    invoice[1].merchant_id
+  end.uniq
+end
 
 
 
