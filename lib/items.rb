@@ -20,17 +20,12 @@ class Item
     @merchant_id = data[:merchant_id].to_i
     @created_at  = Time.parse(data[:created_at].to_s)
     @updated_at  = Time.parse(data[:updated_at].to_s)
-    #@repository  = repository
+    @repository  = repository
   end
 
   def unit_price_to_dollars
     @unit_price.to_f
   end
-
-  # def update_name (name)
-  #   @name = name
-  # end
-
 
   def update_attributes (new_attributes )
     @name        = (new_attributes[:name]) unless new_attributes[:name] == nil

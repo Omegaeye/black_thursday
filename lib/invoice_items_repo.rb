@@ -19,7 +19,6 @@ class InvoiceItemRepo < CentralRepo
       CSV.foreach(@data, headers: true, header_converters: :symbol) do |data|
         invoice_items[data[:id]] = InvoiceItem.new(data, self)
       end
-
         invoice_items
   end
 
