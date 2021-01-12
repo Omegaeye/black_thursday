@@ -161,15 +161,17 @@ class SalesAnalyst
  end
 
  def top_days_by_invoice_count
-   a = @engine.invoices.all_invoices_by_day.values.flatten
-     a.map do |a|
-     @engine.finding_invoices_by_day(a.created_at.strftime("%A")).count > invoice_one_std_dev_above
-   end
+   a = []
+   @engine.invoices.all_invoices_by_day.each do |key, value|
+     if value.count > invoice_one_std_dev_above
+       return a.push(key)
+       end
+     end
  end
 
  def invoice_status(status)
    percentage(@engine.invoices.find_all_by_status(status).length,
    @engine.invoices.all.length)
  end
-  
+
 end
