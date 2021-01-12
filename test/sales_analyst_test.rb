@@ -79,11 +79,10 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_return_merchant_with_one_item
-    actual = @sales_analyst.get_merchants_with_only_one_item
+    actual = @sales_analyst.merchants_with_only_one_item
     assert_equal 3, actual.length
-    require "pry"; binding.pry
     actual.flatten.each do |merchant|
-      assert_instance_of Merchant, merchant[0]
+      assert_instance_of Merchant, merchant
     end
   end
 
