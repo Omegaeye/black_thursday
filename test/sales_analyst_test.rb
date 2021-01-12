@@ -99,7 +99,7 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Hash, @sales_analyst.invoices_group_by_status
     assert_equal 9, @sales_analyst.invoices_with_pending_status.count
     assert_equal 7, @sales_analyst.extract_merchant_ids.count
-    assert_equal [], @sales_analyst
+    assert_equal 7, @sales_analyst.merchants_with_pending_invoices.count
   end
 
 end

@@ -240,6 +240,12 @@ def extract_merchant_ids
   end.uniq
 end
 
+def merchants_with_pending_invoices
+  extract_merchant_ids.map do |id|
+    @engine.merchants.find_by_id(id)
+  end
+end
+
 
 
 end
