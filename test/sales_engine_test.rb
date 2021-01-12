@@ -33,4 +33,8 @@ class SalesEngineTest < Minitest::Test
     assert_equal 9, @engine.transactions_by_result(:success).count
   end
 
+  def test_invoice_by_invoice_id
+    assert_equal 8, @engine.invoice_by_invoice_id(1).count
+  end
+
 end

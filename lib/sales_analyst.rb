@@ -180,7 +180,11 @@ class SalesAnalyst
  end
 
  def invoice_total(invoice_id)
-   #returns the total $ amount of the Invoice with corresponding ID
+   invoices = @engine.invoice_by_invoice_id(invoice_id)
+   price_by_invoice_id = invoices.map do |invoice|
+     invoice.unit_price
+   end
+   price_by_invoice_id.sum
  end
 
 end
