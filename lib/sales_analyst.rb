@@ -143,6 +143,26 @@ class SalesAnalyst
    final_std_dev(group_invoices_by_merchant_id_values, average_invoices_per_merchant)
  end
 
+ def top_merchants_by_invoice_count
+   collector = []
+   @engine.group_invoices_by_merchant_id.each do |key, value|
+     if value.count > (average_invoices_per_merchant + (average_invoices_per_merchant_standard_deviation * 2))
+       collector << @engine.merchants.find_by_id(key)
+     end
+   end
+   collector
+ end
+
+ def bottom_merchants_by_invoice_count
+   collector = []
+   @engine.group_invoices_by_merchant_id.each do |key, value|
+     if value.count < (average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2))
+       collector << @engine.merchants.find_by_id(key)
+     end
+   end
+   collector 
+ end
+
  def average_invoices_by_day
    average(@engine.total_of_all_invoices.flatten.count.to_f, @engine.invoices.all_invoices_by_day.keys.length)
  end
@@ -160,10 +180,12 @@ class SalesAnalyst
  end
 
  def top_days_by_invoice_count
-   a = @engine.invoices.all_invoices_by_day.values.flatten
-     a.map do |a|
-     @engine.finding_invoices_by_day(a.created_at.strftime("%A")).count > invoice_one_std_dev_above
-   end
+   a = []
+   @engine.invoices.all_invoices_by_day.each do |key, value|
+     if value.count > invoice_one_std_dev_above
+       return a.push(key)
+       end
+     end
  end
 
  def invoice_status(status)
@@ -187,4 +209,19 @@ class SalesAnalyst
    #only_merchants.flatten
  end
   
+ def invoice_paid_in_full?(invoice_id)
+   successes = @engine.transactions_by_result(:success)
+   successes.any? do |success|
+     success.id == invoice_id
+   end
+ end
+
+ def invoice_total(invoice_id)
+   invoices = @engine.invoice_by_invoice_id(invoice_id)
+   price_by_invoice_id = invoices.map do |invoice|
+     invoice.unit_price
+   end
+   price_by_invoice_id.sum
+ end
+
 end

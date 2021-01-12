@@ -13,7 +13,7 @@ class CentralRepo
     @collections.values
   end
 
-  def find_by_id (id)
+  def find_by_id(id)
     all.find do |value|
       value.id == id
     end

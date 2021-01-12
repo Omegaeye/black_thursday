@@ -24,15 +24,17 @@ class SalesEngineTest < Minitest::Test
     assert_equal true, @sales_analyst.group_invoices_by_merchant_id.keys.all?{ |key| key.is_a? Integer}
   end
 
-  # def test_items_per_merchant
-  #   assert_equal 4, @engine.items_per_merchant.count
-  #   assert_equal 4, @engine.total_merchants
-  #   assert_equal 5, @engine.merchants_names.keys.count
-  # end
-
   def test_group_invoices_by_merchant_id
     assert_instance_of Hash, @engine.group_invoices_by_merchant_id
     assert_equal true, @engine.group_invoices_by_merchant_id.keys.all?{ |key| key.is_a? Integer}
+  end
+
+  def test_it_can_find_successful_transactions
+    assert_equal 9, @engine.transactions_by_result(:success).count
+  end
+
+  def test_invoice_by_invoice_id
+    assert_equal 8, @engine.invoice_by_invoice_id(1).count
   end
 
 end

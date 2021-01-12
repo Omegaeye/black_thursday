@@ -37,15 +37,10 @@ class SalesEngine
     items_per_merchant.keys.count
   end
 
+
   def find_merchant(merchant_id)
     @merchants.collections.select do |id, merchant|
       merchant_id == merchant.id
-    end
-  end
-
-  def merchants_names
-    @merchants.collections.map do |id, merchant|
-      [id, merchant.name]
     end
   end
 
@@ -69,5 +64,13 @@ class SalesEngine
 
   def all_items_by_unit_price
     @items.all.group_by{|item|item.unit_price}
+  end
+
+  def transactions_by_result(result)
+    @transactions.find_all_by_result(result)
+  end
+
+  def invoice_by_invoice_id(invoice_id)
+    @invoice_items.find_all_by_invoice_id(invoice_id)
   end
 end
