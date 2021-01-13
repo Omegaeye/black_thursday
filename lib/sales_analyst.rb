@@ -356,10 +356,27 @@ end
     merchant_revenue_collections.values.sort.reverse
   end
 
-  def top_revenue_earners_array(x = 20)
-    merchant_revenue_collections_sorted[0..(x-1)]
+  def top_revenue_earners_merchant_ids
+    top_revenue_earners_ids = []
+    merchant_revenue_collections_sorted.each do |revenue|
+      merchant_revenue_collections.each do |merchant_id, merchant_revenue|
+        if merchant_revenue == revenue
+          top_revenue_earners_ids << merchant_id
+        end
+      end
+    end
+    top_revenue_earners_ids
   end
 
+  def top_revenue_earners_merchant_instances
+    top_revenue_earners_merchant_ids.map do |id|
+       @engine.merchants.find_by_id(id)
+    end
+  end
+
+   def top_revenue_earners(x = 20)
+     top_revenue_earners_merchant_instances[0..(x-1)]
+   end
 
 
 
