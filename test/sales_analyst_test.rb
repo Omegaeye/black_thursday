@@ -64,6 +64,9 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_golden_items
+    assert_equal 0.378e3, @sales_analyst.average_average_price_per_merchant
+    assert_equal 0.93246e3, @sales_analyst.double_item_price_standard_deviation
+    assert_equal 0.131046e4, @sales_analyst.golden_items_critera
     assert_equal 1, @sales_analyst.golden_items.count
   end
 
@@ -109,12 +112,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item_registered_in_month
-    assert_equal 1, @sales_analyst.month_converter('January')
-    assert_equal [1, 2, 4, 8], @sales_analyst.items_grouped_by_month.keys
-    assert_instance_of Array, @sales_analyst.access_months_items('January')
-    assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
-    assert_instance_of Hash, @sales_analyst.group_by_month_merchant_id('January')
-    assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
+    assert_instance_of Array, @sales_analyst.merchants_with_only_one_item_registered_in_month('June')
   end
 
   def test_revenue_by_merchant

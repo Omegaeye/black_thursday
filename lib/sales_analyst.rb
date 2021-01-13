@@ -97,7 +97,6 @@ class SalesAnalyst
  def item_price_std_dev
   arg_1 = average_item_prices_collection
   arg_2 = average_average_price_per_merchant
-
   final_std_dev(arg_1, arg_2)
  end
 
@@ -109,10 +108,6 @@ class SalesAnalyst
    l_value = double_item_price_standard_deviation
    r_value = average_average_price_per_merchant
    l_value + r_value
- end
-
- def item_collection
-   @engine.items_per_merchant.values.flatten
  end
 
  def golden_items
@@ -249,43 +244,10 @@ class SalesAnalyst
   end
 end
 
-def month_converter(month)
-  Date::MONTHNAMES.index(month)
-
-end
-
-def items_grouped_by_month
-  @engine.items.collections.group_by do |keys, values|
-    values.created_at.to_s[5..6].to_i
-  end
-end
-
-def access_months_items(month)
-  if items_grouped_by_month.keys.include?(month_converter(month))
-    items_grouped_by_month[month_converter(month)]
-  end
-end
-
-def clean_months_array_to_just_instances_of_items(month)
-  access_months_items(month).flatten.delete_if do |element|
-    element.class != Item
-  end
-end
-
-def group_by_month_merchant_id(month)
-  clean_months_array_to_just_instances_of_items(month).group_by do |item|
-    item.merchant_id
-  end
-end
-
   def merchants_with_only_one_item_registered_in_month(month)
-    collector = []
-    group_by_month_merchant_id(month).each do |key, value|
-      if value.count == 1
-        collector << @engine.merchants.find_by_id(key)
-      end
+    merchants_with_only_one_item.find_all do |merchant|
+      merchant.created_at.strftime("%B") == month
     end
-    collector
   end
 
   def successful_transactions
