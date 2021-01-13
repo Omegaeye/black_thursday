@@ -92,7 +92,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_invoice_total_by_invoice_id
-    assert_equal 0.348956e4, @sales_analyst.invoice_total(1)
+    assert_equal 0.431461e4, @sales_analyst.invoice_total(1)
   end
 
   def test_merchants_with_pending_invoices
@@ -109,6 +109,13 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
     assert_instance_of Hash, @sales_analyst.group_by_month_merchant_id('January')
     assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
+  end
+
+  def test_top_revenue_earners
+    assert_instance_of Transaction, @sales_analyst.successful_transactions[0]
+    assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 10], @sales_analyst.successful_transaction_invoice_ids
+    # assert_equal [], @sales_analyst.top_revenue_earners(1)
+    # assert_equal [], @sales_analyst.top_revenue_earners
   end
 
 end

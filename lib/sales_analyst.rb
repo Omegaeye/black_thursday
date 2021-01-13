@@ -230,17 +230,17 @@ class SalesAnalyst
    end
  end
 
-def invoices_with_pending_status
-  invoices_group_by_status[:pending]
-end
+ def invoices_with_pending_status
+   invoices_group_by_status[:pending]
+ end
 
-def extract_merchant_ids
-  invoices_with_pending_status.map do |invoice|
-    invoice[1].merchant_id
-  end.uniq
-end
+ def extract_merchant_ids
+   invoices_with_pending_status.map do |invoice|
+     invoice[1].merchant_id
+   end.uniq
+ end
 
-def merchants_with_pending_invoices
+ def merchants_with_pending_invoices
   extract_merchant_ids.map do |id|
     @engine.merchants.find_by_id(id)
   end
@@ -274,17 +274,28 @@ def group_by_month_merchant_id(month)
   end
 end
 
-def merchants_with_only_one_item_registered_in_month(month)
-  collector = []
-  group_by_month_merchant_id(month).each do |key, value|
-    if value.count == 1
-      collector << @engine.merchants.find_by_id(key)
+  def merchants_with_only_one_item_registered_in_month(month)
+    collector = []
+    group_by_month_merchant_id(month).each do |key, value|
+      if value.count == 1
+        collector << @engine.merchants.find_by_id(key)
+      end
+    end
+    collector
+  end
+
+  def successful_transactions
+    @engine.transactions_by_result(:success)
+  end
+
+  def successful_transaction_invoice_ids
+    successful_transactions.map do |transaction|
+      transaction.invoice_id
     end
   end
-  collector
-end
 
-
+  # def successful_transactions_invoice_items
+  #   @engine.invoice_items.collections.each do |invoice_item|
 
 
 end
