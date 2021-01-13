@@ -78,10 +78,11 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_return_merchant_with_one_item
-    actual = @sales_analyst.get_merchants_with_only_one_item
     actual = @sales_analyst.merchants_with_only_one_item
-    actual.each do |merchant|
+    assert_equal 3, actual.length
+    actual.flatten.each do |merchant|
     assert_instance_of Merchant, merchant
+
     end
   end
 
@@ -91,15 +92,51 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_invoice_total_by_invoice_id
-    assert_equal 0.348956e4, @sales_analyst.invoice_total(1)
+    assert_equal 0.2057e4, @sales_analyst.invoice_total(1)
   end
 
-  def test_total_revenue_by_date
-    assert_equal 0.380788e4, @sales_analyst.total_revenue_by_date("2012-03-27")
+  def test_merchants_with_pending_invoices
+    assert_instance_of Hash, @sales_analyst.invoices_group_by_status
+    assert_equal 9, @sales_analyst.invoices_with_pending_status.count
+    assert_equal 7, @sales_analyst.extract_merchant_ids.count
+    assert_equal 7, @sales_analyst.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month
+    assert_equal 1, @sales_analyst.month_converter('January')
+    assert_equal [1, 2, 4, 8], @sales_analyst.items_grouped_by_month.keys
+    assert_instance_of Array, @sales_analyst.access_months_items('January')
+    assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
+    assert_instance_of Hash, @sales_analyst.group_by_month_merchant_id('January')
+    assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
+  end
+
+  def test_revenue_by_merchant
+    assert_instance_of Transaction, @sales_analyst.successful_transactions[0]
+    assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 10], @sales_analyst.successful_transaction_invoice_ids
+    assert_equal 5, @sales_analyst.successful_transactions_invoice_item_items.count
+    assert_instance_of InvoiceItem, @sales_analyst.successful_transactions_invoice_item_items[0]
+    assert_instance_of Merchant, @sales_analyst.retrieve_merchant_instance(1)
+    assert_instance_of Item, @sales_analyst.retrieve_merchants_items(1)[0]
+    assert_equal [123], @sales_analyst.merchants_item_ids(1)
+    assert_instance_of InvoiceItem, @sales_analyst.merchants_invoice_items(1)[0]
+    assert_equal 0.1e2, @sales_analyst.revenue_by_merchant(1)
   end
 
   def test_top_revenue_earners
-    # assert_equal 0.13635e3, @sales_analyst.
-    assert_equal 1, @sales_analyst.top_revenue_earners(1)
+    expected = {1=>0, 2=>0, 3=>0, 4=>0, 5=>0}
+    assert_equal expected, @sales_analyst.merchant_id_collections
+    expected = {1=>0.1e2, 2=>0.1807e5, 3=>0.36e3, 4=>0.138e4, 5=>0}
+    assert_equal expected, @sales_analyst.merchant_revenue_collections
+    assert_equal [0.1807e5, 0.138e4, 0.36e3, 0.1e2, 0], @sales_analyst.merchant_revenue_collections_sorted
+    assert_equal [2, 4, 3, 1, 5], @sales_analyst.top_revenue_earners_merchant_ids
+    assert_equal 5, @sales_analyst.top_revenue_earners_merchant_instances.count
+    assert_instance_of Merchant, @sales_analyst.top_revenue_earners_merchant_instances[0]
+    assert_instance_of Merchant, @sales_analyst.top_revenue_earners_merchant_instances[1]
+    assert_instance_of Merchant, @sales_analyst.top_revenue_earners_merchant_instances[2]
+    assert_instance_of Merchant, @sales_analyst.top_revenue_earners_merchant_instances[3]
+    assert_instance_of Merchant, @sales_analyst.top_revenue_earners_merchant_instances[4]
+    assert_equal 3, @sales_analyst.top_revenue_earners(3).count
+    assert_equal 5, @sales_analyst.top_revenue_earners.count
   end
 end
