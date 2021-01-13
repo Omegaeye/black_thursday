@@ -337,21 +337,23 @@ end
   end
 
   def merchant_id_collections
-    @engine.merchants.collections.map do |key, values|
-      key.to_i
+    merchant_revenues = {}
+    @engine.merchants.collections.each do |key, values|
+      merchant_revenues[key.to_i] = 0
     end
+    merchant_revenues
   end
 
   def merchant_revenue_collections
-    merchant_id_collections.map do |id|
-      revenue_by_merchant(id)
+    merchant_revenues = {}
+    merchant_id_collections.each do |key, value|
+      merchant_revenues[key] = revenue_by_merchant(key)
     end
+    merchant_revenues
   end
 
-  def merchant_revenue_collections
-    merchant_id_collections.map do |id|
-      revenue_by_merchant(id)
-    end
+  def merchant_revenue_collections_sorted
+    merchant_revenue_collections.values.sort.reverse
   end
 
 

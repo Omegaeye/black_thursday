@@ -124,9 +124,11 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_top_revenue_earners
-    assert_equal [1, 2, 3, 4, 5], @sales_analyst.merchant_id_collections
-    assert_equal [0.1e2, 0.1807e5, 0.36e3, 0.138e4, 0], @sales_analyst.merchant_revenue_collections
-    assert_equal [0.1e2, 0.1807e5, 0.36e3, 0.138e4, 0], @sales_analyst.merchant_revenue_collections_sorted
+    expected = {1=>0, 2=>0, 3=>0, 4=>0, 5=>0}
+    assert_equal expected, @sales_analyst.merchant_id_collections
+    expected = {1=>0.1e2, 2=>0.1807e5, 3=>0.36e3, 4=>0.138e4, 5=>0}
+    assert_equal expected, @sales_analyst.merchant_revenue_collections
+    assert_equal [0.1807e5, 0.138e4, 0.36e3, 0.1e2, 0], @sales_analyst.merchant_revenue_collections_sorted
     # assert_equal [], @sales_analyst.top_revenue_earners(3)
   end
 
