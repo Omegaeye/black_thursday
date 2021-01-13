@@ -67,7 +67,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1, @sales_analyst.golden_items.count
   end
 
-
   def test_only_one_item
     actual = @sales_analyst.get_merchants_with_only_one_item
 
@@ -82,7 +81,8 @@ class SalesAnalystTest < Minitest::Test
     actual = @sales_analyst.merchants_with_only_one_item
     assert_equal 3, actual.length
     actual.flatten.each do |merchant|
-      assert_instance_of Merchant, merchant
+    assert_instance_of Merchant, merchant
+
     end
   end
 
@@ -139,5 +139,4 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 3, @sales_analyst.top_revenue_earners(3).count
     assert_equal 5, @sales_analyst.top_revenue_earners.count
   end
-
 end

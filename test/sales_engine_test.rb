@@ -37,4 +37,12 @@ class SalesEngineTest < Minitest::Test
     assert_equal 8, @engine.invoice_by_invoice_id(1).count
   end
 
+  def test_invoice_by_date
+    assert_equal 10, @engine.total_invoice_by_date("2012-03-27").count
+  end
+
+  def test_revenue_by_merchants
+    assert_equal [], @engine.revenue_by_merchants
+  end
+
 end

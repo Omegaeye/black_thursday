@@ -251,6 +251,7 @@ end
 
 def month_converter(month)
   Date::MONTHNAMES.index(month)
+
 end
 
 def items_grouped_by_month
