@@ -213,18 +213,18 @@ class SalesAnalyst
  end
 
  def invoice_paid_in_full?(invoice_id)
-   successes = @engine.transactions_by_result(:success)
-   successes.any? do |success|
-     success.id == invoice_id
+   transactions = @engine.transactions_by_result(:success)
+   transactions.any? do |transaction|
+     invoice_id == transaction.invoice_id
    end
  end
 
  def invoice_total(invoice_id)
-   invoices = @engine.invoice_by_invoice_id(invoice_id)
-   price_by_invoice_id = invoices.map do |invoice|
-     invoice.unit_price
-   end
-   price_by_invoice_id.sum
+    if invoice_paid_in_full?(invoice_id) == true
+      @engine.invoice_by_invoice_id(invoice_id).sum do |invoice|
+       invoice.unit_price * invoice.quantity
+        end
+    end
  end
 
  def invoices_group_by_status
