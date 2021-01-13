@@ -16,10 +16,6 @@ class SalesAnalyst
    @engine.items_per_merchant.values.flatten.count.to_f
  end
 
- def count_of_total_merchants
-   @engine.items_per_merchant.keys.count
- end
-
  def average_items_per_merchant
    average(count_of_total_items_across_all_merchants, @engine.total_merchants)
  end
