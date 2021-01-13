@@ -356,6 +356,12 @@ end
     merchant_revenue_collections.values.sort.reverse
   end
 
+  def top_revenue_earners_array(x = 20)
+    merchant_revenue_collections_sorted[0..(x-1)]
+  end
+
+
+
 
 
 
