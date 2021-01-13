@@ -111,17 +111,18 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
   end
 
-  def test_top_revenue_earners
+  def revenue_by_merchant
     assert_instance_of Transaction, @sales_analyst.successful_transactions[0]
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 10], @sales_analyst.successful_transaction_invoice_ids
     assert_equal 5, @sales_analyst.successful_transactions_invoice_item_items.count
     assert_instance_of InvoiceItem, @sales_analyst.successful_transactions_invoice_item_items[0]
-    assert_equal [123, 345, 567, 789, 256], @sales_analyst.successful_transactions_invoice_item_items_item_ids
     # assert_equal [], @sales_analyst.top_revenue_earners(1)
     # assert_equal [], @sales_analyst.top_revenue_earners
     assert_instance_of Merchant, @sales_analyst.retrieve_merchant_instance(1)
     assert_instance_of Item, @sales_analyst.retrieve_merchants_items(1)[0]
-    # assert_equal 0, @sales_analyst.revenue_by_merchant(1)
+    assert_equal [123], @sales_analyst.merchants_item_ids(1)
+    assert_instance_of InvoiceItem, @sales_analyst.merchants_invoice_items(1)[0]
+    assert_equal 0.1e2, @sales_analyst.revenue_by_merchant(1)
   end
 
 end

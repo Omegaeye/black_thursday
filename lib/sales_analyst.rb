@@ -304,18 +304,36 @@ end
     collector
   end
 
-  def successful_transactions_invoice_item_items_item_ids
-    successful_transactions_invoice_item_items.map do |invoice_item|
-      invoice_item.item_id
-    end
-  end
-
   def retrieve_merchant_instance(merchant_id)
     @engine.merchants.find_by_id(merchant_id)
   end
 
   def retrieve_merchants_items(merchant_id)
     @engine.items.find_all_by_merchant_id(merchant_id)
+  end
+
+  def merchants_item_ids(merchant_id)
+    retrieve_merchants_items(merchant_id).map do |item|
+      item.id
+    end
+  end
+
+  def merchants_invoice_items(merchant_id)
+    collector = []
+    successful_transactions_invoice_item_items.each do |invoice_item|
+      if merchants_item_ids(merchant_id).include?(invoice_item.item_id)
+        collector << invoice_item
+      end
+    end
+    collector
+  end
+
+  def revenue_by_merchant(merchant_id)
+    total_revenue = 0
+    merchants_invoice_items(merchant_id).each do |invoice_item|
+      total_revenue += (invoice_item.quantity * invoice_item.unit_price)
+    end
+    total_revenue
   end
 
   # def valid_invoice_items_for_merchant(merchant_id)
