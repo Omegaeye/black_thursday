@@ -42,6 +42,24 @@ class InvoiceRepo < CentralRepo
     end
   end
 
+  def find_all_by_date(date)
+    @collections.select do |key, value|
+      value.created_at.strftime("%F") == date.strftime("%F")
+    end
+  end
+
+  def select_invoices_by_merchant_id(merchant_id)
+    @collections.select do |key,value|
+      value.merchant_id
+    end
+  end
+
+  def select_failed_merchants(invoice_id)
+    @collections.find_all do |key,value|
+      value.id == invoice_id
+    end
+  end
+
 
   def create(attributes)
     @collections[attributes[:id]] = Invoice.new({

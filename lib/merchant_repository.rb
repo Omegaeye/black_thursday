@@ -29,6 +29,8 @@ class MerchantRepository < CentralRepo
     end
   end
 
+  
+
   def create(attributes)
     @collections[attributes[:id]] = Merchant.new({
       :id         => new_id,

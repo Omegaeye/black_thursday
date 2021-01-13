@@ -38,11 +38,8 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_invoice_by_date
-    assert_equal 5, @engine.total_invoice_by_date("2012-03-27").count
-  end
-
-  def test_revenue_by_merchants
-    assert_equal [], @engine.revenue_by_merchants
+    date = Time.parse("2012-03-27")
+    assert_equal 5, @engine.finding_invoices_by_day(date).count
   end
 
 end
