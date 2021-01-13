@@ -184,7 +184,7 @@ class SalesAnalyst
 
  def top_days_by_invoice_count
    a = []
-   @engine.invoices.all_invoices_by_day.each do |key, value|
+   @engine.invoices.all_invoices_by_day.find_all do |key, value|
      if value.count > invoice_one_std_dev_above
        return a.push(key)
        end
