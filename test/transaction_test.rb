@@ -22,7 +22,7 @@ class TransactionTest < Minitest::Test
     assert_equal 8, @data.invoice_id
     assert_equal "4242424242424242", @data.credit_card_number
     assert_equal "0220", @data.credit_card_expiration_date
-    assert_equal "success", @data.result
+    assert_equal :success, @data.result
     expected = Time.parse("2016-01-11 11:51:37 UTC")
     assert_equal expected, @data.created_at
     assert_instance_of Time, @data.updated_at

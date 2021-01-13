@@ -47,7 +47,7 @@ class CustomerRepoTest < Minitest::Test
     actual = @dummy_repo.find_by_id(9)
     assert_equal "Dejon", actual.first_name
 
-    @dummy_repo.update({
+    @dummy_repo.update( 9, {
       id:         9,
       first_name: "Khoa",
       last_name:  "Nguyen",

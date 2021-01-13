@@ -9,6 +9,7 @@ class SalesAnalyst
 
   def initialize(engine)
     @engine = engine
+    @golden_items_critera ||= golden_items_critera
   end
 
  def count_of_total_items_across_all_merchants
@@ -115,9 +116,11 @@ class SalesAnalyst
  end
 
  def golden_items
-   items =item_collection
-   items.find_all do |item|
-     item.unit_price > golden_items_critera
+   @engine.items.collections.reduce([]) do |items, item|
+     if item[1].unit_price > @golden_items_critera
+       items << item[1]
+     end
+     items
    end
  end
 
@@ -200,14 +203,14 @@ class SalesAnalyst
    end
  end
 
- # def merchants_with_only_one_item
- #   merchant_list = get_merchants_with_only_one_item
- #
- #   only_merchants = merchant_list.flat_map do |pair|
- #     @engine.find_merchant(pair[0]).values
- #   end
+ def merchants_with_only_one_item
+   merchant_list = get_merchants_with_only_one_item
+
+   only_merchants = merchant_list.flat_map do |pair|
+     @engine.find_merchant(pair[0]).values
+   end
    #only_merchants.flatten
- # end
+ end
 
  def invoice_paid_in_full?(invoice_id)
    successes = @engine.transactions_by_result(:success)
@@ -377,9 +380,4 @@ end
    def top_revenue_earners(x = 20)
      top_revenue_earners_merchant_instances[0..(x-1)]
    end
-
-
-
-
-
 end

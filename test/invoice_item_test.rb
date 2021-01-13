@@ -11,15 +11,16 @@ class InvoiceItemTest < Minitest::Test
       :created_at => "2016-01-11 11:51:37 UTC",
       :updated_at => Time.now}, @repository)
   end
+
   def test_it_exists
       assert_instance_of InvoiceItem, @data
-    end
+  end
+
   def test_it_has_attributes
     assert_equal 6, @data.id
     assert_equal 7, @data.item_id
     assert_equal 8, @data.invoice_id
     assert_equal 1, @data.quantity
-    assert_equal 10.99, @data.unit_price
     expected = Time.parse("2016-01-11 11:51:37 UTC")
     assert_equal expected, @data.created_at
     assert_instance_of Time, @data.updated_at
