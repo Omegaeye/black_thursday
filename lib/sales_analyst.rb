@@ -336,7 +336,24 @@ end
     total_revenue
   end
 
-  # def valid_invoice_items_for_merchant(merchant_id)
+  def merchant_id_collections
+    @engine.merchants.collections.map do |key, values|
+      key.to_i
+    end
+  end
+
+  def merchant_revenue_collections
+    merchant_id_collections.map do |id|
+      revenue_by_merchant(id)
+    end
+  end
+
+  def merchant_revenue_collections
+    merchant_id_collections.map do |id|
+      revenue_by_merchant(id)
+    end
+  end
+
 
 
 
