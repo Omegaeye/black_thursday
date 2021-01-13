@@ -98,7 +98,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_invoice_total_by_invoice_id
-    assert_equal 0.2057e4, @sales_analyst.invoice_total(1)
+    assert_equal 0.1844e5, @sales_analyst.invoice_total(1)
   end
 
   def test_merchants_with_pending_invoices

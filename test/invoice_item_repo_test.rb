@@ -57,7 +57,6 @@ class InvoiceItemRepoTest < Minitest::Test
       }
     @dummy_repo.create(data)
     actual = @dummy_repo.find_all_by_item_id(11)
-    require "pry"; binding.pry
     assert_equal 4, actual[0].quantity
     actual = @dummy_repo.find_by_id(6)
     assert_equal 11, actual.item_id
