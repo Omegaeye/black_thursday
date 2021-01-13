@@ -256,7 +256,17 @@ def items_grouped_by_month
   end
 end
 
+def access_months_items(month)
+  if items_grouped_by_month.keys.include?(month_converter(month))
+    items_grouped_by_month[month_converter(month)]
+  end
+end
 
+def clean_months_array_to_just_instances_of_items(month)
+  access_months_items(month).flatten.delete_if do |element|
+    element.class != Item
+  end
+end
 # def merchants_with_only_one_item_registered_in_month(month)
 #
 # end

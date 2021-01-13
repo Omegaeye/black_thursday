@@ -103,8 +103,10 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item_registered_in_month
-    assert_equal 3, @sales_analyst.month_converter('March')
+    assert_equal 1, @sales_analyst.month_converter('January')
     assert_equal [1, 2, 4, 8], @sales_analyst.items_grouped_by_month.keys
+    assert_instance_of Array, @sales_analyst.access_months_items('January')
+    assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
     # assert_equal [], @sales_analyst.merchants_with_only_one_item_registered_in_month("March")
   end
 
