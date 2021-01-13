@@ -294,8 +294,16 @@ end
     end
   end
 
-  # def successful_transactions_invoice_items
-  #   @engine.invoice_items.collections.each do |invoice_item|
+  def successful_transactions_invoice_item_items
+    collector =[]
+    @engine.invoice_items.collections.find_all do |key, invoice_item|
+      if successful_transaction_invoice_ids.include?(invoice_item.invoice_id)
+        collector << invoice_item
+      end
+    end
+    collector
+  end
+
 
 
 end

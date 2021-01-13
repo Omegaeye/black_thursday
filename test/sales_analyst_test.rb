@@ -92,7 +92,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_invoice_total_by_invoice_id
-    assert_equal 0.431461e4, @sales_analyst.invoice_total(1)
+    assert_equal 0.2057e4, @sales_analyst.invoice_total(1)
   end
 
   def test_merchants_with_pending_invoices
@@ -114,6 +114,8 @@ class SalesAnalystTest < Minitest::Test
   def test_top_revenue_earners
     assert_instance_of Transaction, @sales_analyst.successful_transactions[0]
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 10], @sales_analyst.successful_transaction_invoice_ids
+    assert_equal 5, @sales_analyst.successful_transactions_invoice_item_items.count
+    assert_instance_of InvoiceItem, @sales_analyst.successful_transactions_invoice_item_items[0]
     # assert_equal [], @sales_analyst.top_revenue_earners(1)
     # assert_equal [], @sales_analyst.top_revenue_earners
   end
