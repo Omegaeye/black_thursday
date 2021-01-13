@@ -77,6 +77,12 @@ class SalesAnalystTest < Minitest::Test
     end
   end
 
+  def test_top_days_by_invoice_count
+    actual = @sales_analyst.top_days_by_invoice_count
+    assert_equal Array, actual.ciass
+
+  end
+
   def test_it_can_return_merchant_with_one_item
     actual = @sales_analyst.merchants_with_only_one_item
     assert_equal 3, actual.length
