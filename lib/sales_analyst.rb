@@ -304,6 +304,22 @@ end
     collector
   end
 
+  def successful_transactions_invoice_item_items_item_ids
+    successful_transactions_invoice_item_items.map do |invoice_item|
+      invoice_item.item_id
+    end
+  end
+
+  def retrieve_merchant_instance(merchant_id)
+    @engine.merchants.find_by_id(merchant_id)
+  end
+
+  def retrieve_merchants_items(merchant_id)
+    @engine.items.find_all_by_merchant_id(merchant_id)
+  end
+
+  # def valid_invoice_items_for_merchant(merchant_id)
+
 
 
 end
