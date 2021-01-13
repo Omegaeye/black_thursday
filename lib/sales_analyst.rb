@@ -267,10 +267,12 @@ def clean_months_array_to_just_instances_of_items(month)
     element.class != Item
   end
 end
-# def merchants_with_only_one_item_registered_in_month(month)
-#
-# end
 
+def group_by_month_merchant_id(month)
+  clean_months_array_to_just_instances_of_items(month).group_by do |item|
+    item.merchant_id
+  end
+end
 
 
 end
