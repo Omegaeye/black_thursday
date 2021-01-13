@@ -64,6 +64,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_golden_items
+    assert_equal 0.378e3, @sales_analyst.average_average_price_per_merchant
     assert_equal 0.93246e3, @sales_analyst.double_item_price_standard_deviation
     assert_equal 0.131046e4, @sales_analyst.golden_items_critera
     assert_equal 1, @sales_analyst.golden_items.count

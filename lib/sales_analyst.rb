@@ -97,7 +97,6 @@ class SalesAnalyst
  def item_price_std_dev
   arg_1 = average_item_prices_collection
   arg_2 = average_average_price_per_merchant
-
   final_std_dev(arg_1, arg_2)
  end
 
