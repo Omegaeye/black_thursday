@@ -56,17 +56,17 @@ class SalesAnalyst
      end
    end
    collector.flatten
- end #array of all the items for specific merchant
+ end
 
  def sum_item_price_for_merchant(merchant_number)
    indexed_items = items_to_be_averaged(merchant_number)
    indexed_items.sum {|item| item.unit_price_to_dollars}
- end #returns float of PRICE OF ALL OF THE ITEMS for specific merchant
+ end
 
  def average_item_price_for_merchant(merchant_id)
   r_value = items_to_be_averaged(merchant_id).count
    average(sum_item_price_for_merchant(merchant_id),r_value).to_d
- end # BIGDECIMAL of the average item price for specific merchant
+ end
 
  def merchant_id_collection
    @engine.items_per_merchant.keys
@@ -76,7 +76,7 @@ class SalesAnalyst
    merchant_id_collection.map do |merchant_id|
      average_item_price_for_merchant(merchant_id)
    end
- end#ALL OF THE AVERAGE ITEM PRICES FOR EACH MERCHANT
+ end
 
  def list_items_price
    @engine.all_items_by_unit_price
@@ -84,14 +84,14 @@ class SalesAnalyst
 
  def sum_average_prices_collections
    average_item_prices_collection.sum
- end #TOTAL AVERAGE ITEM PRICE ACROSS ALL MERCHANTS
+ end
 
  def average_average_price_per_merchant
-   average(sum_average_prices_collections,merchant_id_collection.count).to_d
+   average(sum_average_prices_collections, merchant_id_collection.count).to_d
  end
 
  def item_price_std_dev
-  arg_1 = average_item_prices_collection
+  arg_1 = @engine.items.all.map {|item| item.unit_price}
   arg_2 = average_average_price_per_merchant
   final_std_dev(arg_1, arg_2)
  end
