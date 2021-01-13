@@ -108,7 +108,7 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Array, @sales_analyst.access_months_items('January')
     assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
     assert_instance_of Hash, @sales_analyst.group_by_month_merchant_id('January')
-    # assert_equal [], @sales_analyst.merchants_with_only_one_item_registered_in_month("March")
+    assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
   end
 
 end

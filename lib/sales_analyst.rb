@@ -274,5 +274,17 @@ def group_by_month_merchant_id(month)
   end
 end
 
+def merchants_with_only_one_item_registered_in_month(month)
+  collector = []
+  group_by_month_merchant_id(month).each do |key, value|
+    if value.count == 1
+      collector << @engine.merchants.find_by_id(key)
+    end
+  end
+  collector
+end
+
+
+
 
 end
