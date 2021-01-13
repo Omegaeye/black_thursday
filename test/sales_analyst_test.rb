@@ -67,7 +67,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1, @sales_analyst.golden_items.count
   end
 
-
   def test_only_one_item
     actual = @sales_analyst.get_merchants_with_only_one_item
 
@@ -80,13 +79,11 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_return_merchant_with_one_item
     actual = @sales_analyst.get_merchants_with_only_one_item
-    assert_equal 3, actual.length
+    actual = @sales_analyst.merchants_with_only_one_item
     actual.each do |merchant|
-      assert_instance_of Merchant, merchant
+    assert_instance_of Merchant, merchant
     end
   end
-
-end
 
   def test_invoice_paid_in_full
     assert_equal true, @sales_analyst.invoice_paid_in_full?(1)
@@ -96,5 +93,13 @@ end
   def test_invoice_total_by_invoice_id
     assert_equal 0.348956e4, @sales_analyst.invoice_total(1)
   end
-end
 
+  def test_total_revenue_by_date
+    assert_equal 0.380788e4, @sales_analyst.total_revenue_by_date("2012-03-27")
+  end
+
+  def test_top_revenue_earners
+    # assert_equal 0.13635e3, @sales_analyst.
+    assert_equal 1, @sales_analyst.top_revenue_earners(1)
+  end
+end

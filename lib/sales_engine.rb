@@ -73,4 +73,14 @@ class SalesEngine
   def invoice_by_invoice_id(invoice_id)
     @invoice_items.find_all_by_invoice_id(invoice_id)
   end
+
+  def total_invoice_by_date(date)
+    @invoice_items.collections.flat_map do |id, invoice_item|
+      if ((invoice_item.created_at.to_s[0..9] == date) &&
+          (transactions_by_result(:success)))
+        invoice_item.unit_price
+      end
+    end
+  end
+
 end

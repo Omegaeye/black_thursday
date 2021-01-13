@@ -7,11 +7,9 @@ require 'time'
 class MerchantRepository < CentralRepo
   attr_reader :collections
 
-
   def initialize(data, engine)
     super
   end
-
 
   def populate_collection
     merchants = Hash.new
@@ -39,5 +37,5 @@ class MerchantRepository < CentralRepo
       :updated_at => Time.now},
       self)
   end
-  
+
 end
