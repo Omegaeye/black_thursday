@@ -227,4 +227,157 @@ class SalesAnalyst
    price_by_invoice_id.sum
  end
 
+ def invoices_group_by_status
+   @engine.invoices.collections.group_by do |key, value|
+     value.status
+   end
+ end
+
+ def invoices_with_pending_status
+   invoices_group_by_status[:pending]
+ end
+
+ def extract_merchant_ids
+   invoices_with_pending_status.map do |invoice|
+     invoice[1].merchant_id
+   end.uniq
+ end
+
+ def merchants_with_pending_invoices
+  extract_merchant_ids.map do |id|
+    @engine.merchants.find_by_id(id)
+  end
+end
+
+def month_converter(month)
+  Date::MONTHNAMES.index(month)
+end
+
+def items_grouped_by_month
+  @engine.items.collections.group_by do |keys, values|
+    values.created_at.to_s[5..6].to_i
+  end
+end
+
+def access_months_items(month)
+  if items_grouped_by_month.keys.include?(month_converter(month))
+    items_grouped_by_month[month_converter(month)]
+  end
+end
+
+def clean_months_array_to_just_instances_of_items(month)
+  access_months_items(month).flatten.delete_if do |element|
+    element.class != Item
+  end
+end
+
+def group_by_month_merchant_id(month)
+  clean_months_array_to_just_instances_of_items(month).group_by do |item|
+    item.merchant_id
+  end
+end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    collector = []
+    group_by_month_merchant_id(month).each do |key, value|
+      if value.count == 1
+        collector << @engine.merchants.find_by_id(key)
+      end
+    end
+    collector
+  end
+
+  def successful_transactions
+    @engine.transactions_by_result(:success)
+  end
+
+  def successful_transaction_invoice_ids
+    successful_transactions.map do |transaction|
+      transaction.invoice_id
+    end
+  end
+
+  def successful_transactions_invoice_item_items
+    collector =[]
+    @engine.invoice_items.collections.find_all do |key, invoice_item|
+      if successful_transaction_invoice_ids.include?(invoice_item.invoice_id)
+        collector << invoice_item
+      end
+    end
+    collector
+  end
+
+  def retrieve_merchant_instance(merchant_id)
+    @engine.merchants.find_by_id(merchant_id)
+  end
+
+  def retrieve_merchants_items(merchant_id)
+    @engine.items.find_all_by_merchant_id(merchant_id)
+  end
+
+  def merchants_item_ids(merchant_id)
+    retrieve_merchants_items(merchant_id).map do |item|
+      item.id
+    end
+  end
+
+  def merchants_invoice_items(merchant_id)
+    collector = []
+    successful_transactions_invoice_item_items.each do |invoice_item|
+      if merchants_item_ids(merchant_id).include?(invoice_item.item_id)
+        collector << invoice_item
+      end
+    end
+    collector
+  end
+
+  def revenue_by_merchant(merchant_id)
+    total_revenue = 0
+    merchants_invoice_items(merchant_id).each do |invoice_item|
+      total_revenue += (invoice_item.quantity * invoice_item.unit_price)
+    end
+    total_revenue
+  end
+
+  def merchant_id_collections
+    merchant_revenues = {}
+    @engine.merchants.collections.each do |key, values|
+      merchant_revenues[key.to_i] = 0
+    end
+    merchant_revenues
+  end
+
+  def merchant_revenue_collections
+    merchant_revenues = {}
+    merchant_id_collections.each do |key, value|
+      merchant_revenues[key] = revenue_by_merchant(key)
+    end
+    merchant_revenues
+  end
+
+  def merchant_revenue_collections_sorted
+    merchant_revenue_collections.values.sort.reverse
+  end
+
+  def top_revenue_earners_merchant_ids
+    top_revenue_earners_ids = []
+    merchant_revenue_collections_sorted.each do |revenue|
+      merchant_revenue_collections.each do |merchant_id, merchant_revenue|
+        if merchant_revenue == revenue
+          top_revenue_earners_ids << merchant_id
+        end
+      end
+    end
+    top_revenue_earners_ids
+  end
+
+  def top_revenue_earners_merchant_instances
+    top_revenue_earners_merchant_ids.map do |id|
+       @engine.merchants.find_by_id(id)
+    end
+  end
+
+   def top_revenue_earners(x = 20)
+     top_revenue_earners_merchant_instances[0..(x-1)]
+   end
 end
