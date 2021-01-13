@@ -79,7 +79,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_top_days_by_invoice_count
     actual = @sales_analyst.top_days_by_invoice_count
-    assert_equal Array, actual.ciass
+    assert_equal Array, actual.class
 
   end
 
