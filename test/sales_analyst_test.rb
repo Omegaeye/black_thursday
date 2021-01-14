@@ -36,7 +36,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_average_invoices_per_merchant_standard_deviation
-
     assert_equal 0.72, @sales_analyst.average_invoices_per_merchant_standard_deviation
   end
 
@@ -61,9 +60,20 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 1.75, @sales_analyst.sum_of(0.50, 1.25)
     assert_equal 1.75, @sales_analyst.one_std_dev_above_avg_std_dev_items_per_merchant
     assert_equal "Keckenbauer", @sales_analyst.merchants_with_high_item_count[0].name
+    assert_equal 1, @sales_analyst.items_to_be_averaged(1).count
+    assert_equal 2.0, @sales_analyst.sum_item_price_for_merchant(1)
+    assert_equal 2, @sales_analyst.average_item_price_for_merchant(1)
+    assert_equal [1, 2, 3, 4], @sales_analyst.merchant_id_collection
+    assert_equal [0.2e1, 0.1005e4, 0.45e2, 0.46e3], @sales_analyst.average_item_prices_collection
+    assert_equal 5, @sales_analyst.list_items_price.count
   end
 
   def test_golden_items
+    assert_equal 0.1512e4, @sales_analyst.sum_average_prices_collections
+    assert_equal 0.46623e3, @sales_analyst.item_price_std_dev
+    assert_equal 0.378e3, @sales_analyst.average_average_price_per_merchant
+    assert_equal 0.93246e3, @sales_analyst.double_item_price_standard_deviation
+    assert_equal 0.131046e4, @sales_analyst.golden_items_critera
     assert_equal 1, @sales_analyst.golden_items.count
   end
 
@@ -109,12 +119,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item_registered_in_month
-    assert_equal 1, @sales_analyst.month_converter('January')
-    assert_equal [1, 2, 4, 8], @sales_analyst.items_grouped_by_month.keys
-    assert_instance_of Array, @sales_analyst.access_months_items('January')
-    assert_instance_of Item, @sales_analyst.clean_months_array_to_just_instances_of_items('January')[0]
-    assert_instance_of Hash, @sales_analyst.group_by_month_merchant_id('January')
-    assert_instance_of Merchant, @sales_analyst.merchants_with_only_one_item_registered_in_month('January')[0]
+    assert_instance_of Array, @sales_analyst.merchants_with_only_one_item_registered_in_month('June')
   end
 
   def test_revenue_by_merchant
