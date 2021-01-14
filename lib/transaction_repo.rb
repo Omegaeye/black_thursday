@@ -41,6 +41,12 @@ class TransactionRepo < CentralRepo
     end
   end
 
+  def select_by_result(result)
+    @collections.select do |key,value|
+      value.result == result
+    end
+  end
+
   def create(attributes)
     @collections[attributes[:id]] = Transaction.new({
       :id                           => new_id,

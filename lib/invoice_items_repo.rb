@@ -34,6 +34,13 @@ class InvoiceItemRepo < CentralRepo
     end
   end
 
+
+  def invoice_items_by_id(id)
+     @collections.select do |key,value|
+      value.invoice_id == id
+    end
+  end
+
   def create(attributes)
     @collections[attributes[:id]] = InvoiceItem.new({
       :id         => new_id,

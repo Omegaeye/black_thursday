@@ -197,7 +197,7 @@ class SalesAnalyst
  def merchants_with_only_one_item
    merchant_list = get_merchants_with_only_one_item
 
-   only_merchants = merchant_list.flat_map do |pair|
+   merchant_list.flat_map do |pair|
      @engine.find_merchant(pair[0]).values
    end
    #only_merchants.flatten
@@ -213,32 +213,32 @@ class SalesAnalyst
  def invoice_total(invoice_id)
     if invoice_paid_in_full?(invoice_id) == true
       @engine.invoice_by_invoice_id(invoice_id).sum do |invoice|
-       invoice.unit_price * invoice.quantity
-        end
+        invoice.unit_price * invoice.quantity
+      end
     end
- end
-
+  end
+    
  def invoices_group_by_status
    @engine.invoices.collections.group_by do |key, value|
      value.status
    end
  end
-
+    
  def invoices_with_pending_status
    invoices_group_by_status[:pending]
  end
-
+    
  def extract_merchant_ids
    invoices_with_pending_status.map do |invoice|
      invoice[1].merchant_id
    end.uniq
  end
-
+    
  def merchants_with_pending_invoices
   extract_merchant_ids.map do |id|
     @engine.merchants.find_by_id(id)
+   end
   end
-end
 
   def merchants_with_only_one_item_registered_in_month(month)
     merchants_with_only_one_item.find_all do |merchant|
@@ -257,13 +257,9 @@ end
   end
 
   def successful_transactions_invoice_item_items
-    collector =[]
     @engine.invoice_items.collections.find_all do |key, invoice_item|
-      if successful_transaction_invoice_ids.include?(invoice_item.invoice_id)
-        collector << invoice_item
-      end
+      successful_transaction_invoice_ids.include?(key.to_i)
     end
-    collector
   end
 
   def retrieve_merchant_instance(merchant_id)
@@ -301,21 +297,13 @@ end
   def merchant_id_collections
     merchant_revenues = {}
     @engine.merchants.collections.each do |key, values|
-      merchant_revenues[key.to_i] = 0
-    end
-    merchant_revenues
-  end
-
-  def merchant_revenue_collections
-    merchant_revenues = {}
-    merchant_id_collections.each do |key, value|
-      merchant_revenues[key] = revenue_by_merchant(key)
+      merchant_revenues[key.to_i] = revenue_by_merchant(key)
     end
     merchant_revenues
   end
 
   def merchant_revenue_collections_sorted
-    merchant_revenue_collections.values.sort.reverse
+    merchant_id_collections.values.sort.reverse
   end
 
   def top_revenue_earners_merchant_ids
@@ -332,11 +320,33 @@ end
 
   def top_revenue_earners_merchant_instances
     top_revenue_earners_merchant_ids.map do |id|
-       @engine.merchants.find_by_id(id)
+      @engine.merchants.find_by_id(id)
     end
   end
 
-   def top_revenue_earners(x = 20)
-     top_revenue_earners_merchant_instances[0..(x-1)]
-   end
+  def top_revenue_earners(x = 20)
+    top_revenue_earners_merchant_instances[0..(x-1)]
+  end
+
+  def revenue_from_invoice_id(invoice_id)
+    @engine.invoice_items_by_id(invoice_id).sum do |key,value|
+      value.unit_price * value.quantity
+    end
+  end
+
+  def valid_invoices(date)
+    @engine.invoices_by_date(date).select do |id, invoice_item|
+      invoice_paid_in_full?(id.to_i)
+    end
+  end
+
+  def total_revenue_by_date(date)
+    invoices = valid_invoices(date)
+    addition = 0
+    invoices.each do |id,invoice_item|
+      
+      addition = revenue_from_invoice_id(id.to_i)
+    end
+    addition
+  end
 end
