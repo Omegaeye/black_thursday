@@ -69,13 +69,13 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_golden_items
-    assert_equal 0.1512e4, @sales_analyst.sum_average_prices_collections
-    assert_equal 0.46623e3, @sales_analyst.item_price_std_dev
-    assert_equal 0.378e3, @sales_analyst.average_average_price_per_merchant
-    assert_equal 0.93246e3, @sales_analyst.double_item_price_standard_deviation
-    assert_equal 0.131046e4, @sales_analyst.golden_items_critera
-    assert_equal 1, @sales_analyst.golden_items.count
-  end
+      assert_equal 0.1512e4, @sales_analyst.sum_average_prices_collections
+      assert_equal  0.86967e3, @sales_analyst.item_price_std_dev
+      assert_equal 0.378e3, @sales_analyst.average_average_price_per_merchant
+      assert_equal 0.173934e4, @sales_analyst.double_item_price_standard_deviation
+      assert_equal 0.211734e4, @sales_analyst.golden_items_critera
+      assert_equal 0, @sales_analyst.golden_items.count
+    end
 
   def test_only_one_item
     actual = @sales_analyst.get_merchants_with_only_one_item
@@ -135,8 +135,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_top_revenue_earners
-    expected = {1=>0, 2=>0, 3=>0, 4=>0, 5=>0}
-    assert_equal expected, @sales_analyst.merchant_id_collections
     expected = {1=>0.1e2, 2=>0.1807e5, 3=>0.36e3, 4=>0.138e4, 5=>0}
     assert_equal expected, @sales_analyst.merchant_id_collections
     assert_equal [0.1807e5, 0.138e4, 0.36e3, 0.1e2, 0], @sales_analyst.merchant_revenue_collections_sorted
