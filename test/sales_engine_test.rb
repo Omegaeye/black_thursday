@@ -39,8 +39,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_invoice_by_date
     date = Time.parse("2012-03-27")
-    assert_equal 5, @engine.finding_invoices_by_day(date).count
-    assert_equal 5, @engine.total_invoice_by_date("2012-03-27").count
+    assert_equal 0, @engine.finding_invoices_by_day(date).count
   end
 
 end

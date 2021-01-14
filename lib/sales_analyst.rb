@@ -217,23 +217,23 @@ class SalesAnalyst
       end
     end
   end
-    
+
  def invoices_group_by_status
    @engine.invoices.collections.group_by do |key, value|
      value.status
    end
  end
-    
+
  def invoices_with_pending_status
    invoices_group_by_status[:pending]
  end
-    
+
  def extract_merchant_ids
    invoices_with_pending_status.map do |invoice|
      invoice[1].merchant_id
    end.uniq
  end
-    
+
  def merchants_with_pending_invoices
   extract_merchant_ids.map do |id|
     @engine.merchants.find_by_id(id)
@@ -278,7 +278,7 @@ class SalesAnalyst
 
   def merchants_invoice_items(merchant_id)
     collector = []
-    successful_transactions_invoice_item_items.each do |invoice_item|
+    successful_transactions_invoice_item_items.each do |id, invoice_item|
       if merchants_item_ids(merchant_id).include?(invoice_item.item_id)
         collector << invoice_item
       end
@@ -297,7 +297,7 @@ class SalesAnalyst
   def merchant_id_collections
     merchant_revenues = {}
     @engine.merchants.collections.each do |key, values|
-      merchant_revenues[key.to_i] = revenue_by_merchant(key)
+      merchant_revenues[key.to_i] = revenue_by_merchant(key.to_i)
     end
     merchant_revenues
   end
@@ -309,7 +309,7 @@ class SalesAnalyst
   def top_revenue_earners_merchant_ids
     top_revenue_earners_ids = []
     merchant_revenue_collections_sorted.each do |revenue|
-      merchant_revenue_collections.each do |merchant_id, merchant_revenue|
+      merchant_id_collections.each do |merchant_id, merchant_revenue|
         if merchant_revenue == revenue
           top_revenue_earners_ids << merchant_id
         end
@@ -344,7 +344,7 @@ class SalesAnalyst
     invoices = valid_invoices(date)
     addition = 0
     invoices.each do |id,invoice_item|
-      
+
       addition = revenue_from_invoice_id(id.to_i)
     end
     addition
